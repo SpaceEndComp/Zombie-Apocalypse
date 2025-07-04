@@ -1,5 +1,5 @@
 import { world, system } from "@minecraft/server";
-import { buffZombies, spawnMutantZombie } from "./zombie_buff_level";
+import { buffZombies, spawnMutantZombie } from "./mobs/zombie_buff_level";
 // import { randomMob } from "./random_mob";
 
 let lastCheckDay = -1;
