@@ -1,4 +1,5 @@
 import { world, system, MinecraftEffectTypes } from "@minecraft/server";
+import { world, system, MinecraftEffectTypes } from "@minecraft/server";
 
 let trigerred = false;
 system.runInterval(() => {
