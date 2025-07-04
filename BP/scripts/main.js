@@ -2,7 +2,7 @@ import { world, system, MinecraftEffectTypes } from "@minecraft/server";
 
 let trigerred = false;
 system.runInterval(() => {
-    const day = world.getDay();
+    let day = world.getDay();
     if (day == 2 && !trigerred) {
         world.sendMessage("§l§4Hari ke-2 dimulai!, zombie berevolusi ke tahap 2!");
         const zombies = world.getDimension("overworld").getEntities({ type: "minecraft:zombie" });
@@ -13,4 +13,4 @@ system.runInterval(() => {
         });
         trigerred = true;
     }
-});
+}, 0);
