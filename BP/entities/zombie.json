@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "minecraft:zombie",
+            "is_spawnable": true,
+            "is_summonable": true,
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": ["zombie", "undead", "monster"]
+            },
+            "minecraft:nameable": {},
+            "minecraft:health": {
+                "value": 100,
+                "max": 100
+            },
+            "minecraft:burns_in_daylight": false
+        }
+    }
+}
