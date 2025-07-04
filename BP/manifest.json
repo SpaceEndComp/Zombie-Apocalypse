@@ -3,7 +3,7 @@
   "header": {
     "name": "Farmer Village",
     "description": "Farmer equipment for Space End server (Villager Survival Virtual)",
-    "min_engine_version": [1, 21, 90],
+    "min_engine_version": [1, 21, 0],
     "uuid": "d58c7738-eced-45a0-a642-d3baef7bb9cc",
     "version": [0, 0, 1]
   },
