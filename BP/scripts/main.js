@@ -1,4 +1,4 @@
-import { world, system, MinecraftEffectTypes } from "@minecraft/server";
+import { world, system} from "@minecraft/server";
 
 let trigerred = false;
 system.runInterval(() => {
@@ -7,9 +7,9 @@ system.runInterval(() => {
         world.sendMessage("§l§4Hari ke-2 dimulai!, zombie berevolusi ke tahap 2!");
         const zombies = world.getDimension("overworld").getEntities({ type: "minecraft:zombie" });
         zombies.forEach(zombie => {
-            zombie.addEffect(MinecraftEffectTypes.strength, 99999, 1);
-            zombie.addEffect(MinecraftEffectTypes.speed, 100, 1);
-            zombie.addEffect(MinecraftEffectTypes.regeneration, 10, 0);
+            zombie.addEffect(strength, 99999, 1);
+            zombie.addEffect(speed, 100, 1);
+            zombie.addEffect(regeneration, 10, 0);
         });
         trigerred = true;
     }
