@@ -4,7 +4,7 @@
     "name": "Zombie Apocalypse",
     "description": "Addon for Space End server(Zombie Apocalypse)",
     "min_engine_version": [1, 21, 90],
-    "uuid": "d58c7738-eced-45a0-a642-d3baef7bb9cc",
+    "uuid": "a89ef4f1-9ae3-4361-a641-1aa42acd0f7a",
     "version": [1, 0, 1]
   },
   "modules": [

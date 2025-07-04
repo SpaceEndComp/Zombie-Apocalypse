@@ -1,13 +1,7 @@
 import { world, system } from "@minecraft/server";
 
-let lastSpawnTick = 0;
-const cooldownTicks = 400;
-
 export function randomMob() {
     try {
-        const currentTick = system.currentTick;
-        if (currentTick - lastSpawnTick < cooldownTicks) return;
-
         const mobs = [
             "minecraft:zombie",
             "minecraft:skeleton",
@@ -22,7 +16,11 @@ export function randomMob() {
         const player = world.getPlayers()[0];
 
         if (player) {
-            const position = player.location;
+            const position = {
+                x: player.location.x + (Math.random() - 0.5) * 20,
+                y: player.location.y,
+                z: player.location.z + (Math.random() - 0.5) * 20
+            };
             const dimension = player.dimension;
 
             const mobEntity = dimension.spawnEntity(randomMob, position);
@@ -31,14 +29,12 @@ export function randomMob() {
                 world.sendMessage(
                     `§l§aSebuah ${randomMob} telah muncul di dekatmu!`
                 );
-                mobEntity.addEffect("minecraft:strength", 99999, 1);
-                mobEntity.addEffect("minecraft:speed", 100, 1);
-                mobEntity.addEffect("minecraft:regeneration", 10, 0);
+                mobEntity.addEffect("minecraft:strength", 99999, 255);
+                mobEntity.addEffect("minecraft:speed", 100, 100);
+                mobEntity.addEffect("minecraft:regeneration", 1000, 20);
             } else {
                 world.sendMessage("§l§cGagal memunculkan mob!");
             }
-
-            lastSpawnTick = currentTick;
         }
     } catch (e) {
         world.sendMessage(`§l§cTerjadi kesalahan: ${e.message}`);
