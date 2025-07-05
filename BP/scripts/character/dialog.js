@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server";
 
-export function showDay10Dialog() {
+export function charDialog() {
     const dialogId = "za:dialog1_sent";
     const alreadySent = world.getDynamicProperty(dialogId);
 
