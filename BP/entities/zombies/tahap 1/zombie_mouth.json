@@ -1,262 +1,337 @@
 {
-  "format_version": "1.16.0",
-  "minecraft:entity": {
-    "description": {
-      "identifier": "za:zombie", // Mengoverride zombie vanilla
-      "is_spawnable": true,
-      "is_summonable": true,
-      "is_experimental": false,
-      "properties": {
-        // Properti untuk variasi jenis berdasarkan hari
-        "minecraft:variant": {
-          "type": "int",
-          "range": [0, 2], // 0: Early Game, 1: Mid Game, 2: Late Game
-          "default": 0
-        },
-        // Properti untuk animasi/suara teriakan
-        "minecraft:has_screamed_at_target": {
-          "type": "bool",
-          "default": false
-        },
-        // Properti untuk perubahan model saat terkena pedang
-        "minecraft:is_damaged_by_sword": {
-          "type": "bool",
-          "default": false
-        },
-        // Properti untuk efek perlambatan dari serangan kaki
-        "minecraft:is_slowed": {
-          "type": "bool",
-          "default": false
-        }
-      }
-    },
-
-    "component_groups": {
-      // --- Grup Komponen untuk Variasi Jenis Berdasarkan Hari ---
-      "zombie_type:early_game": {
-        "minecraft:movement": { "value": 0.35 }, // Cepat
-        "minecraft:attack": { "damage": 2 },     // Lemah
-        "minecraft:health": { "value": 15, "max": 15 }
-      },
-      "zombie_type:mid_game": {
-        "minecraft:movement": { "value": 0.23 }, // Sedang
-        "minecraft:attack": { "damage": 4 },     // Agak kuat
-        "minecraft:health": { "value": 25, "max": 25 }
-      },
-      "zombie_type:late_game": {
-        "minecraft:movement": { "value": 0.15 }, // Lambat
-        "minecraft:attack": { "damage": 6 },     // Sangat kuat
-        "minecraft:health": { "value": 40, "max": 40 }
-      },
-
-      // --- Grup Komponen untuk Efek Perlambatan ---
-      "zombie_effect:slowed": {
-        "minecraft:movement": { "value": 0.05 } // Sangat lambat
-      },
-
-      // --- Grup Komponen untuk Animasi/Suara Teriakan ---
-      "zombie_scream:trigger_scream_property": {
-        "minecraft:set_property": { "minecraft:has_screamed_at_target": true }
-      },
-      "zombie_scream:reset_scream_property": {
-        "minecraft:set_property": { "minecraft:has_screamed_at_target": false }
-      }
-    },
-
-    "components": {
-      // --- Komponen Dasar Zombie ---
-      "minecraft:is_hidden_when_invisible": {},
-      "minecraft:collision_box": { "width": 0.6, "height": 1.8 },
-      "minecraft:health": { "value": 20, "max": 20 }, // Nilai default awal
-      "minecraft:movement": { "value": 0.23 }, // Nilai default awal
-      "minecraft:attack": { "damage": 3 },     // Nilai default awal
-      "minecraft:type_family": { "family": [ "monster", "zombie" ] },
-      "minecraft:physics": {},
-      "minecraft:pushable": { "is_pushable": true, "is_mobile": true },
-      "minecraft:knockback_resistance": { "value": 0.0 },
-      "minecraft:despawn_from_distance": {},
-      "minecraft:loot": { "table": "loot_tables/entities/zombie.json" },
-      "minecraft:rideable": { // Agar bisa ditunggangi jika perlu
-        "seat_count": 1,
-        "family_types": ["player"]
-      },
-
-      // --- Komponen Perilaku Dasar ---
-      "minecraft:behavior.float": { "priority": 0 },
-      "minecraft:behavior.melee_attack": { "priority": 3 },
-      "minecraft:behavior.nearest_attackable_target": {
-        "priority": 1,
-        "entity_types": [ { "filters": { "any_of": [ { "test": "is_family", "subject": "other", "value": "player" } ] } } ]
-      },
-      "minecraft:behavior.look_at_entity": {
-        "priority": 4,
-        "look_distance": 8.0,
-        "set_target": true,
-        "filters": { "test": "is_family", "subject": "other", "value": "player" }
-      },
-      "minecraft:behavior.random_look_around": { "priority": 5 },
-      "minecraft:behavior.random_stroll": { "priority": 6, "speed_multiplier": 1.0 },
-
-      // --- Komponen Custom Hitbox per Bagian Tubuh ---
-      "minecraft:hitbox": {
-        "hitboxes": [
-          { "hitbox_name": "head_hitbox", "size": [0.6, 0.6, 0.6], "pivot": [0.0, 1.7, 0.0], "bone": "head" },
-          { "hitbox_name": "body_hitbox", "size": [0.8, 1.2, 0.4], "pivot": [0.0, 1.0, 0.0], "bone": "body" },
-          { "hitbox_name": "right_arm_hitbox", "size": [0.4, 0.8, 0.4], "pivot": [-0.6, 1.3, 0.0], "bone": "rightArm" },
-          { "hitbox_name": "left_arm_hitbox", "size": [0.4, 0.8, 0.4], "pivot": [0.6, 1.3, 0.0], "bone": "leftArm" },
-          { "hitbox_name": "left_leg_hitbox", "size": [0.4, 0.8, 0.4], "pivot": [-0.2, 0.4, 0.0], "bone": "leftLeg" },
-          { "hitbox_name": "right_leg_hitbox", "size": [0.4, 0.8, 0.4], "pivot": [0.2, 0.4, 0.0], "bone": "rightLeg" }
-        ]
-      },
-
-      // --- Komponen Deteksi Damage dengan Hitbox Kustom ---
-      "minecraft:damage_sensor": {
-        "triggers": [
-          // Trigger: Terkena Kepala (damage ekstra)
-          {
-            "cause": "entity_attack",
-            "filters": {
-              "all_of": [
-                { "test": "is_family", "subject": "other", "value": "player" },
-                { "test": "query.hitbox_name", "operator": "==", "value": "head_hitbox" }
-              ]
-            },
-            "on_damage": { "event": "zombie:take_head_damage" },
-            "applies_to_self": true
-          },
-          // Trigger: Terkena Kaki (perlambatan)
-          {
-            "cause": "entity_attack",
-            "filters": {
-              "all_of": [
-                { "test": "is_family", "subject": "other", "value": "player" },
-                { "test": "query.hitbox_name", "operator": "==", "value": "left_leg_hitbox" },
-                { "test": "query.property('minecraft:is_slowed')", "operator": "==", "value": false }
-              ]
-            },
-            "on_damage": { "event": "zombie:take_leg_damage" },
-            "applies_to_self": true
-          },
-          // Trigger: Mengubah Model Saat Terkena Pedang
-          {
-            "cause": "entity_attack",
-            "deals_damage": false, // Tidak mempengaruhi damage sebenarnya
-            "filters": {
-              "all_of": [
-                { "test": "is_family", "subject": "other", "value": "player" },
-                { "test": "has_equipment", "subject": "other", "domain": "hand", "value": "item.sword", "operator": "has_tag" },
-                { "test": "query.property('minecraft:is_damaged_by_sword')", "operator": "==", "value": false }
-              ]
-            },
-            "on_damage": { "event": "zombie:change_model_to_damaged" },
-            "applies_to_self": true
-          }
-        ]
-      },
-
-      // --- Komponen untuk Memicu Animasi/Suara Teriakan ---
-      "minecraft:scheduler": {
-        "schedule_check": {
-          "interval": 5, // Cek setiap 0.25 detik
-          "event": "zombie:check_for_scream_trigger"
-        }
-      }
-    },
-
-    "permutations": [
-      // --- Permutasi untuk Variasi Jenis Berdasarkan Hari ---
-      {
-        "condition": "query.variant == 0",
-        "add": { "component_groups": ["zombie_type:early_game"] },
-        "remove": { "component_groups": ["zombie_type:mid_game", "zombie_type:late_game"] }
-      },
-      {
-        "condition": "query.variant == 1",
-        "add": { "component_groups": ["zombie_type:mid_game"] },
-        "remove": { "component_groups": ["zombie_type:early_game", "zombie_type:late_game"] }
-      },
-      {
-        "condition": "query.variant == 2",
-        "add": { "component_groups": ["zombie_type:late_game"] },
-        "remove": { "component_groups": ["zombie_type:early_game", "zombie_type:mid_game"] }
-      },
-
-      // --- Permutasi untuk Efek Perlambatan ---
-      {
-        "condition": "query.property('minecraft:is_slowed') == true",
-        "add": { "component_groups": ["zombie_effect:slowed"] },
-        "remove": { "minecraft:movement": {} } // Menghapus komponen movement default
-      },
-
-      // --- Permutasi untuk Perubahan Model Saat Terkena Pedang ---
-      {
-        "condition": "query.property('minecraft:is_damaged_by_sword') == true",
-        "add": { "minecraft:variant": { "value": 1 } } // Mengubah properti variant ke 1 (model rusak)
-      },
-      {
-        "condition": "query.property('minecraft:is_damaged_by_sword') == false",
-        "add": { "minecraft:variant": { "value": 0 } } // Mengubah properti variant ke 0 (model normal)
-      }
-    ],
-
-    "events": {
-      // --- Event Saat Zombie Muncul (Reset Properti dan Set Jenis Berdasarkan Hari) ---
-      "minecraft:entity_spawned": {
-        "set_property": {
-          "minecraft:has_screamed_at_target": false,
-          "minecraft:is_damaged_by_sword": false,
-          "minecraft:is_slowed": false
-        },
-        "sequence": [
-          {
-            "condition": "query.day_of_world >= 0 && query.day_of_world <= 7",
-            "set_property": { "minecraft:variant": 0 } // Jenis Early Game
-          },
-          {
-            "condition": "query.day_of_world > 7 && query.day_of_world <= 14",
-            "set_property": { "minecraft:variant": 1 } // Jenis Mid Game
-          },
-          {
-            "condition": "query.day_of_world > 14",
-            "set_property": { "minecraft:variant": 2 } // Jenis Late Game
-          }
-        ]
-      },
-
-      // --- Event untuk Deteksi dan Pemicu Teriakan/Animasi ---
-      "zombie:check_for_scream_trigger": {
-        "sequence": [
-          {
-            "condition": "query.has_target == 1 && query.property('minecraft:has_screamed_at_target') == false",
-            "add": { "component_groups": ["zombie_scream:trigger_scream_property"] },
-            "filters": {
-              "all_of": [ { "test": "is_family", "subject": "target", "value": "player" } ]
+    "format_version": "1.16.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "za:zombie",
+            "is_spawnable": true,
+            "is_summonable": true,
+            "is_experimental": false,
+            "properties": {
+                "minecraft:variant": {
+                    "type": "int",
+                    "range": [0, 2],
+                    "default": 0
+                },
+                "minecraft:has_screamed_at_target": {
+                    "type": "bool",
+                    "default": false
+                },
+                "minecraft:is_damaged_by_sword": {
+                    "type": "bool",
+                    "default": false
+                },
+                "minecraft:is_slowed": {
+                    "type": "bool",
+                    "default": false
+                }
             }
-          }
-        ]
-      },
+        },
 
-      // --- Event untuk Mereset Properti Teriakan ---
-      "zombie:reset_scream_on_target": { // Event ini dipicu dari animation controller jika target hilang
-        "set_property": { "minecraft:has_screamed_at_target": false }
-      },
+        "component_groups": {
+            "zombie_type:early_game": {
+                "minecraft:movement": { "value": 0.35 },
+                "minecraft:attack": { "damage": 2 },
+                "minecraft:health": { "value": 15, "max": 15 }
+            },
+            "zombie_type:mid_game": {
+                "minecraft:movement": { "value": 0.23 },
+                "minecraft:attack": { "damage": 4 },
+                "minecraft:health": { "value": 25, "max": 25 }
+            },
+            "zombie_type:late_game": {
+                "minecraft:movement": { "value": 0.15 },
+                "minecraft:attack": { "damage": 6 },
+                "minecraft:health": { "value": 40, "max": 40 }
+            },
+            "zombie_effect:slowed": {
+                "minecraft:movement": { "value": 0.05 }
+            },
+            "zombie_scream:trigger_scream_property": {
+                "minecraft:set_property": {
+                    "minecraft:has_screamed_at_target": true
+                }
+            },
+            "zombie_scream:reset_scream_property": {
+                "minecraft:set_property": {
+                    "minecraft:has_screamed_at_target": false
+                }
+            }
+        },
 
-      // --- Event untuk Kerusakan Kepala ---
-      "zombie:take_head_damage": {
-        "damage": { "type": "magic", "amount": 5 } // Contoh: tambahan damage
-        // Bisa juga memicu partikel atau suara
-      },
+        "components": {
+            "minecraft:is_hidden_when_invisible": {},
+            "minecraft:collision_box": { "width": 0.6, "height": 1.8 },
+            "minecraft:health": { "value": 20, "max": 20 },
+            "minecraft:movement": { "value": 0.23 },
+            "minecraft:attack": { "damage": 3 },
+            "minecraft:type_family": { "family": ["monster", "zombie"] },
+            "minecraft:physics": {},
+            "minecraft:pushable": { "is_pushable": true, "is_mobile": true },
+            "minecraft:knockback_resistance": { "value": 0.0 },
+            "minecraft:despawn_from_distance": {},
+            "minecraft:loot": { "table": "loot_tables/entities/zombie.json" },
+            "minecraft:rideable": {
+                "seat_count": 1,
+                "family_types": ["player"]
+            },
+            "minecraft:behavior.float": { "priority": 0 },
+            "minecraft:behavior.melee_attack": { "priority": 3 },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 1,
+                "entity_types": [
+                    {
+                        "filters": {
+                            "any_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "player"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "minecraft:behavior.look_at_entity": {
+                "priority": 4,
+                "look_distance": 8.0,
+                "set_target": true,
+                "filters": {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player"
+                }
+            },
+            "minecraft:behavior.random_look_around": { "priority": 5 },
+            "minecraft:behavior.random_stroll": {
+                "priority": 6,
+                "speed_multiplier": 1.0
+            },
+            "minecraft:hitbox": {
+                "hitboxes": [
+                    {
+                        "hitbox_name": "head_hitbox",
+                        "size": [0.6, 0.6, 0.6],
+                        "pivot": [0.0, 1.7, 0.0],
+                        "bone": "head"
+                    },
+                    {
+                        "hitbox_name": "body_hitbox",
+                        "size": [0.8, 1.2, 0.4],
+                        "pivot": [0.0, 1.0, 0.0],
+                        "bone": "body"
+                    },
+                    {
+                        "hitbox_name": "right_arm_hitbox",
+                        "size": [0.4, 0.8, 0.4],
+                        "pivot": [-0.6, 1.3, 0.0],
+                        "bone": "rightArm"
+                    },
+                    {
+                        "hitbox_name": "left_arm_hitbox",
+                        "size": [0.4, 0.8, 0.4],
+                        "pivot": [0.6, 1.3, 0.0],
+                        "bone": "leftArm"
+                    },
+                    {
+                        "hitbox_name": "left_leg_hitbox",
+                        "size": [0.4, 0.8, 0.4],
+                        "pivot": [-0.2, 0.4, 0.0],
+                        "bone": "leftLeg"
+                    },
+                    {
+                        "hitbox_name": "right_leg_hitbox",
+                        "size": [0.4, 0.8, 0.4],
+                        "pivot": [0.2, 0.4, 0.0],
+                        "bone": "rightLeg"
+                    }
+                ]
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "entity_attack",
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "player"
+                                },
+                                {
+                                    "test": "query.hitbox_name",
+                                    "operator": "==",
+                                    "value": "head_hitbox"
+                                }
+                            ]
+                        },
+                        "on_damage": { "event": "zombie:take_head_damage" },
+                        "applies_to_self": true
+                    },
+                    {
+                        "cause": "entity_attack",
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "player"
+                                },
+                                {
+                                    "test": "query.hitbox_name",
+                                    "operator": "==",
+                                    "value": "left_leg_hitbox"
+                                },
+                                {
+                                    "test": "query.property('minecraft:is_slowed')",
+                                    "operator": "==",
+                                    "value": false
+                                }
+                            ]
+                        },
+                        "on_damage": { "event": "zombie:take_leg_damage" },
+                        "applies_to_self": true
+                    },
+                    {
+                        "cause": "entity_attack",
+                        "deals_damage": false,
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "player"
+                                },
+                                {
+                                    "test": "has_equipment",
+                                    "subject": "other",
+                                    "domain": "hand",
+                                    "value": "item.sword",
+                                    "operator": "has_tag"
+                                },
+                                {
+                                    "test": "query.property('minecraft:is_damaged_by_sword')",
+                                    "operator": "==",
+                                    "value": false
+                                }
+                            ]
+                        },
+                        "on_damage": {
+                            "event": "zombie:change_model_to_damaged"
+                        },
+                        "applies_to_self": true
+                    }
+                ]
+            },
+            "minecraft:scheduler": {
+                "schedule_check": {
+                    "interval": 5,
+                    "event": "zombie:check_for_scream_trigger"
+                }
+            }
+        },
 
-      // --- Event untuk Kerusakan Kaki ---
-      "zombie:take_leg_damage": {
-        "set_property": { "minecraft:is_slowed": true }
-        // Bisa juga memicu partikel atau suara "kaki sakit"
-      },
+        "permutations": [
+            {
+                "condition": "query.variant == 0",
+                "add": { "component_groups": ["zombie_type:early_game"] },
+                "remove": {
+                    "component_groups": [
+                        "zombie_type:mid_game",
+                        "zombie_type:late_game"
+                    ]
+                }
+            },
+            {
+                "condition": "query.variant == 1",
+                "add": { "component_groups": ["zombie_type:mid_game"] },
+                "remove": {
+                    "component_groups": [
+                        "zombie_type:early_game",
+                        "zombie_type:late_game"
+                    ]
+                }
+            },
+            {
+                "condition": "query.variant == 2",
+                "add": { "component_groups": ["zombie_type:late_game"] },
+                "remove": {
+                    "component_groups": [
+                        "zombie_type:early_game",
+                        "zombie_type:mid_game"
+                    ]
+                }
+            },
+            {
+                "condition": "query.property('minecraft:is_slowed') == true",
+                "add": { "component_groups": ["zombie_effect:slowed"] },
+                "remove": { "minecraft:movement": {} }
+            },
+            {
+                "condition": "query.property('minecraft:is_damaged_by_sword') == true",
+                "add": { "minecraft:variant": { "value": 1 } }
+            },
+            {
+                "condition": "query.property('minecraft:is_damaged_by_sword') == false",
+                "add": { "minecraft:variant": { "value": 0 } }
+            }
+        ],
 
-      // --- Event untuk Perubahan Model Saat Terkena Pedang ---
-      "zombie:change_model_to_damaged": {
-        "set_property": { "minecraft:is_damaged_by_sword": true }
-      }
+        "events": {
+            "minecraft:entity_spawned": {
+                "set_property": {
+                    "minecraft:has_screamed_at_target": false,
+                    "minecraft:is_damaged_by_sword": false,
+                    "minecraft:is_slowed": false
+                },
+                "sequence": [
+                    {
+                        "condition": "query.day_of_world >= 0 && query.day_of_world <= 7",
+                        "set_property": { "minecraft:variant": 0 }
+                    },
+                    {
+                        "condition": "query.day_of_world > 7 && query.day_of_world <= 14",
+                        "set_property": { "minecraft:variant": 1 }
+                    },
+                    {
+                        "condition": "query.day_of_world > 14",
+                        "set_property": { "minecraft:variant": 2 }
+                    }
+                ]
+            },
+            "zombie:check_for_scream_trigger": {
+                "sequence": [
+                    {
+                        "condition": "query.has_target == 1 && query.property('minecraft:has_screamed_at_target') == false",
+                        "add": {
+                            "component_groups": [
+                                "zombie_scream:trigger_scream_property"
+                            ]
+                        },
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "target",
+                                    "value": "player"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "zombie:reset_scream_on_target": {
+                "set_property": { "minecraft:has_screamed_at_target": false }
+            },
+            "zombie:take_head_damage": {
+                "damage": { "type": "magic", "amount": 5 }
+            },
+            "zombie:take_leg_damage": {
+                "set_property": { "minecraft:is_slowed": true }
+            },
+            "zombie:change_model_to_damaged": {
+                "set_property": { "minecraft:is_damaged_by_sword": true }
+            }
+        }
     }
-  }
 }
