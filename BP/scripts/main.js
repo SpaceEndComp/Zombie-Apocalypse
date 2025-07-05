@@ -13,3 +13,5 @@ world.beforeEvents.chatSend.subscribe((msg) => {
         showStatusUI(msg.sender)
     }
 });
+
+charDialog()
