@@ -2,11 +2,11 @@
 	"format_version": "1.19.0",
 	"animation_controllers": {
 		"controller.animation.zombie_mouth.walk": {
-			"initial_state": "walking",
+			"initial_state": "idle",
 			"states": {
 				"idle": {
 					"animations": [
-						{"idle": "idle"}
+						"idle"
 					],
 					"transitions": [
 						{"walking": "query.is_moving"}
@@ -15,12 +15,7 @@
 				},
 				"walking": {
 					"animations": [
-						{"walk": "walk"}
-					],
-					"particle_effects": [
-						{
-							"effect": ""
-						}
+						"walk"
 					],
 					"transitions": [
 						{"idle": "!query.is_moving"}
@@ -30,21 +25,22 @@
 			}
 		},
 		"controller.animation.zombie_mouth.scream": {
+			"initial_state": "default",
 			"states": {
 				"default": {
-					"animations": [
-						{"idle": "idle"}
-					],
 					"transitions": [
-						{"active": "query.has_property('minecraft:has_screamed_at_target') == true"}
+						{"active": "query.get_property('za:is_screaming')"}
 					]
 				},
 				"active": {
 					"animations": [
-						{"scream": "scream"}
+						"scream"
+					],
+					"on_exit": [
+						{ "event": "za:stop_scream", "target": "self" }
 					],
 					"transitions": [
-						{"default": "!query.has_property('minecraft:has_screamed_at_target') == true"}
+						{"default": "query.any_animation_finished"}
 					]
 				}
 			}
