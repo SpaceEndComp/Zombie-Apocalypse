@@ -1,5 +1,5 @@
 {
-    "format_version": "1.8.0",
+    "format_version": "1.10.0",
     "minecraft:client_entity": {
         "description": {
             "identifier": "za:zombie",
@@ -11,6 +11,16 @@
             },
             "geometry": {
                 "default": "geometry.zombie"
+            },
+            "animations": {
+                "idle": "animation.zombie.idle",
+                "walk": "animation.zombie.walk",
+                "movement_controller": "controller.animation.zombie.walk"
+            },
+            "scripts": {
+                "animate": [
+                    "movement_controller"
+                ]
             }
         }
     }
