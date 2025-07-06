@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "za:zombie",
+            "is_spawnable": true,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:health": {
+                "value": 20,
+                "max": 20
+            },
+            "minecraft:movement": {
+                "value": 0.3
+            },
+            "minecraft:attack": {
+                "damage": 4
+            }
+        }
+    }
+}

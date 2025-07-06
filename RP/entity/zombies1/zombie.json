@@ -1,0 +1,17 @@
+{
+    "format_version": "1.8.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "za:zombie",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "textures": {
+                "default": "textures/entity/zombies1/zombie"
+            },
+            "geometry": {
+                "default": "geometry.zombie"
+            }
+        }
+    }
+}
