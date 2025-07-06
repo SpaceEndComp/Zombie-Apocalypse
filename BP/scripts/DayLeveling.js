@@ -1,4 +1,3 @@
-import { buffZombies, spawnMutantZombie } from "./mobs/BuffZombie";
 import { world, system } from "@minecraft/server";
 
 export function dayLeveling() {
