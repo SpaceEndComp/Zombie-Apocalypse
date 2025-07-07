@@ -18,6 +18,10 @@
             "minecraft:attack": {
                 "damage": 4
             },
+            "minecraft:jump.static":{},
+            "minecraft:experience_reward": {
+                "on_death": "query.last_hit_by_player ? 5 : 0"
+            },
             "minecraft:collision_box": {
                 "height": 1.8,
                 "width": 1
@@ -26,9 +30,6 @@
             "minecraft:nameable": {},
             "minecraft:navigation.walk": {
                 "can_path_over_water": true
-            },
-            "minecraft:navigation.swim": {
-                "can_swim": true
             },
             "minecraft:loot": {
                 "table": "loot_tables/entity/zombies1/zombie.json"
@@ -75,8 +76,11 @@
                 "priority": 4,
                 "speed_multiplier": 0.8
             },
+            "minecraft:behavior.random_swim": {
+                "priority": 5
+            },
             "minecraft:behavior.look_at_player": {
-                "priority": 5,
+                "priority": 6,
                 "look_distance": 8
             }
         }
