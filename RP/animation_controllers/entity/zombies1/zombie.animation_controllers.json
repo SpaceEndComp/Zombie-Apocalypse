@@ -7,13 +7,25 @@
 				"idle": {
 					"animations": ["idle"],
 					"transitions": [
-						{"walk": "query.is_moving"}
+						{"start_walking": "query.modified_move_speed > 0.01"}
+					]
+				},
+				"start_walking": {
+					"animations": ["start_walking"],
+					"transitions": [
+						{"walk": "query.all_animations_finished"}
 					]
 				},
 				"walk": {
 					"animations": ["walk"],
 					"transitions": [
-						{"idle": "!query.is_moving"}
+						{"stop_walking": "query.modified_move_speed < 0.01"}
+					]
+				},
+				"stop_walking": {
+					"animations": ["stop_walking"],
+					"transitions": [
+						{"idle": "query.all_animations_finished"}
 					]
 				}
 			}
