@@ -28,6 +28,10 @@
             },
             "minecraft:physics": {},
             "minecraft:nameable": {},
+            "minecraft:pushable": {
+                "is_pushable": true,
+                "is_pushable_by_piston": true
+            },
             "minecraft:navigation.walk": {
                 "can_path_over_water": true
             },
