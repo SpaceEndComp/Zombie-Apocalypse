@@ -23,8 +23,8 @@
                 "on_death": "query.last_hit_by_player ? 5 : 0"
             },
             "minecraft:collision_box": {
-                "height": 1.8,
-                "width": 1
+                "height": 2.0,
+                "width": 0.8
             },
             "minecraft:physics": {},
             "minecraft:nameable": {},
@@ -82,6 +82,9 @@
             "minecraft:behavior.look_at_player": {
                 "priority": 6,
                 "look_distance": 8
+            },
+            "minecraft:behavior.random_look_around": {
+                "priority": 7
             }
         }
     }

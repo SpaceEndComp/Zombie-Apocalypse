@@ -1,0 +1,36 @@
+{
+    "format_version": "1.12.0",
+    "minecraft:spawn_rules": {
+        "description": {
+            "identifier": "za:zombie",
+            "population_control": "monster"
+        },
+        "conditions": [
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+                "minecraft:brightness_filter": {
+                    "min": 8,
+                    "max": 15,
+                    "adjust_for_weather": true
+                },
+                "minecraft:difficulty_filter": {
+                    "min": "normal",
+                    "max": "hard"
+                },
+                "minecraft:weight": {
+                    "default": 30
+                },
+                "minecraft:herd": {
+                    "min_size": 0,
+                    "max_size": 4
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "operator": "==",
+                    "value": "zombies1"
+                }
+            }
+        ]
+    }
+}
