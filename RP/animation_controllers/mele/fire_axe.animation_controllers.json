@@ -1,0 +1,37 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.fire_axe.wield": {
+			"initial_state": "first_person",
+			"states": {
+				"first_person": {
+					"animations": ["wield_first_person"],
+					"transitions": [
+						{"third_person": "!c.is_first_person"}
+					]
+				},
+				"third_person": {
+					"animations": ["wield_third_person"],
+					"transitions": [
+						{"first_person": "c.is_first_person"}
+					]
+				}
+			}
+		},
+		"controller.animation.fire_axe.attack": {
+			"states": {
+				"default": {
+					"transitions": [
+						{"attack": "v.attack_time > 0.1"}
+					]
+				},
+				"attack": {
+					"animations": ["attack"],
+					"transitions": [
+						{"default": "v.attack_time <= 0.1"}
+					]
+				}
+			}
+		}
+	}
+}

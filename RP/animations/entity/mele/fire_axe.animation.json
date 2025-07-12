@@ -1,0 +1,44 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.fire_axe.wield_first_person": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": [75, 0, -30],
+					"position": [5, 19, 5],
+					"scale": 1.5
+				}
+			}
+		},
+		"animation.fire_axe.attack": {
+			"animation_length": 0.5,
+			"bones": {
+				"rightArm": {
+					"rotation": {
+						"0.0": [75, 0, -30],
+						"0.25": [75, 50, -30],
+						"0.375": [180, 50, -30],
+						"0.5": [75, 0, -30]
+					},
+					"position": {
+						"0.0": [5, 19, 5],
+						"0.25": [19, 25, -11],
+						"0.375": [19, 25, -11],
+						"0.5": [5, 19, 5]
+					},
+					"scale": 1.5
+				}
+			}
+		},
+		"animation.fire_axe.wield_third_person": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 4]
+				}
+			}
+		}
+	}
+}
