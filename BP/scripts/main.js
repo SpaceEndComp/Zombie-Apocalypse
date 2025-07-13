@@ -1,5 +1,5 @@
 import { dayLeveling } from "./DayLeveling";
-import { world, EffectType } from "@minecraft/server";
+import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
 
 // Initialize the day leveling system
@@ -13,10 +13,26 @@ world.beforeEvents.chatSend.subscribe((msg) => {
     }
 });
 
+// --- Zombie Kill Tracker ---
+const ZOMBIE_ID = "za:zombie";
+const PLAYER_KILL_PROP = "zombie_kill_count";
+
+// Inisialisasi dynamic property untuk setiap pemain jika belum ada
+function ensurePlayerKillProp(player) {
+    if (player.getDynamicProperty(PLAYER_KILL_PROP) === undefined) {
+        player.setDynamicProperty(PLAYER_KILL_PROP, 0);
+    }
+}
+
+// Daftarkan komponen custom agar warning hilang
+if (typeof world.registerComponent === "function") {
+    world.registerComponent("za:is_weapon", {});
+}
+
 // --- Fire Axe Custom Logic ---
 const FIRE_AXE_ID = "za:fire_axe";
 
-world.afterEvents.entityHit.subscribe(eventData => {
+world.events.entityHit?.subscribe?.((eventData) => {
     const { damagingEntity, hitEntity } = eventData;
 
     // Check if the attacker is a player
@@ -35,6 +51,78 @@ world.afterEvents.entityHit.subscribe(eventData => {
         damagingEntity.startItemCooldown("mainhand", 10); // 10 ticks = 0.5 seconds
 
         // 2. (Optional) Apply a special ability, like slowness.
-        hitEntity.addEffect(EffectType.get("slowness"), 100, { amplifier: 1, showParticles: true });
+        hitEntity.addEffect(EffectType.get("slowness"), 100, {
+            amplifier: 1,
+            showParticles: true,
+        });
     }
 });
+
+const PLAYER_STAMINA_PROP = "stamina";
+const STAMINA_MAX = 100;
+const STAMINA_MIN = 0;
+const STAMINA_RECOVERY = 1; // per tick
+const STAMINA_DRAIN = 2; // per tick jika lari
+const STAMINA_DRAIN_WALK = 1; // per tick jika jalan
+
+function ensurePlayerStaminaProp(player) {
+    if (player.getDynamicProperty(PLAYER_STAMINA_PROP) === undefined) {
+        player.setDynamicProperty(PLAYER_STAMINA_PROP, STAMINA_MAX);
+    }
+}
+
+// Simpan posisi sebelumnya untuk deteksi movement
+const lastPlayerPos = new Map();
+
+system.runInterval(() => {
+    for (const player of world.getPlayers()) {
+        ensurePlayerKillProp(player);
+        ensurePlayerStaminaProp(player);
+        // Ambil posisi sekarang
+        const pos = player.location;
+        const id = player.id ?? player.name;
+        const last = lastPlayerPos.get(id);
+        let moved = false;
+        let speed = 0;
+        if (last) {
+            const dx = pos.x - last.x;
+            const dy = pos.y - last.y;
+            const dz = pos.z - last.z;
+            speed = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            moved = speed > 0.01;
+        }
+        lastPlayerPos.set(id, { x: pos.x, y: pos.y, z: pos.z });
+
+        // Deteksi lari (speed > 0.25), jalan (speed > 0.05), diam
+        let stamina =
+            player.getDynamicProperty(PLAYER_STAMINA_PROP) ?? STAMINA_MAX;
+        if (speed > 0.25) {
+            stamina -= STAMINA_DRAIN;
+        } else if (speed > 0.05) {
+            stamina -= STAMINA_DRAIN_WALK;
+        } else {
+            stamina += STAMINA_RECOVERY;
+        }
+        if (stamina > STAMINA_MAX) stamina = STAMINA_MAX;
+        if (stamina < STAMINA_MIN) stamina = STAMINA_MIN;
+        player.setDynamicProperty(PLAYER_STAMINA_PROP, stamina);
+    }
+}, 1); // tiap tick
+
+// Tampilkan bar stamina di action bar setiap detik
+system.runInterval(() => {
+    for (const player of world.getPlayers()) {
+        const stamina =
+            player.getDynamicProperty(PLAYER_STAMINA_PROP) ?? STAMINA_MAX;
+        // Buat bar stamina visual
+        const barLength = 20;
+        const filled = Math.round((stamina / STAMINA_MAX) * barLength);
+        const empty = barLength - filled;
+        const bar = `§a${"|".repeat(filled)}§7${"|".repeat(empty)}`;
+        const text = `§lStamina: ${bar} §f${stamina}`;
+        // Kirim ke action bar (subtitle)
+        player.runCommandAsync(
+            `titleraw @s actionbar {\"rawtext\":[{\"text\":\"${text}\"}]}`
+        );
+    }
+}, 20); // setiap detik

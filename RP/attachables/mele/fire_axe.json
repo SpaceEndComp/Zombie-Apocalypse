@@ -1,34 +1,29 @@
 {
-  "format_version": "1.10.0",
-  "minecraft:attachable": {
-    "description": {
-      "identifier": "za:fire_axe",
-      "materials": {
-        "default": "entity_alphatest"
-      },
-      "textures": {
-        "default": "textures/mele/fire_axe"
-      },
-      "geometry": {
-        "default": "geometry.fire_axe"
-      },
-      "scripts": {
-        "pre_animation": [
-          "v.attack_time = Math.max(0, v.attack_time - 0.05);"
-        ],
-        "animate": [
-          "wielding_controller",
-          "attack_controller"
-        ]
-      },
-      "animations": {
-        "wield_first_person": "animation.fire_axe.wield_first_person",
-        "wield_third_person": "animation.fire_axe.wield_third_person",
-        "attack": "animation.fire_axe.attack",
-        "wielding_controller": "controller.animation.fire_axe.wield",
-        "attack_controller": "controller.animation.fire_axe.attack"
-      },
-      "render_controllers": [ "controller.render.default" ]
+    "format_version": "1.10.0",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "za:fire_axe",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/mele/fire_axe"
+            },
+            "geometry": {
+                "default": "geometry.za_fire_axe"
+            },
+            "scripts": {
+                "pre_animation": [],
+                "animate": ["wielding_controller", "attack_controller"]
+            },
+            "animations": {
+                "wield_first_person": "animation.fire_axe.wield_first_person",
+                "wield_third_person": "animation.fire_axe.wield_third_person",
+                "attack": "animation.fire_axe.attack",
+                "wielding_controller": "controller.animation.fire_axe.wield",
+                "attack_controller": "controller.animation.fire_axe.attack"
+            },
+            "render_controllers": ["controller.render.default"]
+        }
     }
-  }
 }
