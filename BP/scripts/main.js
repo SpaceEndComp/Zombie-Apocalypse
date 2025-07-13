@@ -102,7 +102,7 @@ system.runInterval(() => {
         // Tambahkan efek slowness jika stamina <= STAMINA_MIN, hilangkan jika >= 30
         if (stamina <= STAMINA_MIN) {
             player.addEffect("minecraft:slowness", 10000, {
-                amplifier: 2,
+                amplifier: 5,
                 showParticles: false,
             }); // 10 detik, amplifier 2
         } else if (stamina >= 70) {
