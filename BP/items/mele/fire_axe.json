@@ -16,7 +16,7 @@
             },
             "minecraft:damage": 8,
             "minecraft:wearable": {
-                "slot": "slot.weapon.offhand"
+                "slot": "slot.weapon.mainhand"
             },
             "minecraft:digger": {
                 "use_efficiency": true,
