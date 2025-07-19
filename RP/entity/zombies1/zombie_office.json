@@ -1,0 +1,21 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "za:zombie",
+            "min_engine_version": "1.8.0",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "textures": {
+                "default": "zombie"
+            },
+            "geometry": {
+                "default": "geometry.zombie"
+            },
+            "spawn_egg": {
+                "texture": "zombie_spawn_egg"
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.10.0",
 	"animation_controllers": {
-		"controller.animation.fire_axe.wield": {
+		"controller.animation.mele.wield": {
 			"initial_state": "first_person",
 			"states": {
 				"first_person": {
@@ -18,17 +18,17 @@
 				}
 			}
 		},
-		"controller.animation.fire_axe.attack": {
+		"controller.animation.mele.attack": {
 			"states": {
 				"default": {
 					"transitions": [
-						{"attack": "v.attack_time > 0.1"}
+						{ "attack": "c.is_first_person && q.is_using_item" }
 					]
 				},
 				"attack": {
 					"animations": ["attack"],
 					"transitions": [
-						{"default": "v.attack_time <= 0.1"}
+						{"default": "q.anim_time >= 0.5"}
 					]
 				}
 			}

@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "za:closed_oak_cabinet"
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "origin": [-8, 0, -8],
+                "size": [8, 16, 8]
+            },
+            "minecraft:selection_box": {
+                "origin": [-8, 0, -8],
+                "size": [8, 16, 8]
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 3.0
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.3
+            },
+            "minecraft:map_color": "#976d4d",
+            "minecraft:flammable": {
+                "catch_chance_modifier": 5,
+                "destroy_chance_modifier": 20
+            },
+            "minecraft:loot": "loot_tables/closed_cabinet.json",
+            "minecraft:geometry": "geometry.closed_cabinet",
+            "minecraft:interact": {
+                "on_interact": {
+                    "transform_to_block": "za:opened_oak_cabinet",
+                    "decrement_stack": false,
+                    "spawn_loot": "loot_tables/loot_cabinet.json"
+                }
+            }
+        }
+    }
+}

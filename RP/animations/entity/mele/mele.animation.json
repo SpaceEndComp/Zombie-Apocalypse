@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.fire_axe.wield_first_person": {
+		"animation.mele.wield_first_person": {
 			"loop": true,
 			"bones": {
 				"rightArm": {
@@ -11,7 +11,7 @@
 				}
 			}
 		},
-		"animation.fire_axe.attack": {
+		"animation.mele.attack": {
 			"animation_length": 0.5,
 			"bones": {
 				"rightArm": {
@@ -31,7 +31,7 @@
 				}
 			}
 		},
-		"animation.fire_axe.wield_third_person": {
+		"animation.mele.wield_third_person": {
 			"loop": true,
 			"bones": {
 				"rightArm": {
