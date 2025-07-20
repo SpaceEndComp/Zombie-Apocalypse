@@ -1,5 +1,5 @@
 import { world } from "@minecraft/server";
-import { ModalFormData } from "@minecraft/server-ui";
+import { MessageFormResponse, MessageFormData } from "@minecraft/server-ui";
 
 export function showStatusUI(player) {
     const day = world.getDay();
@@ -9,25 +9,29 @@ export function showStatusUI(player) {
     else if (day >= 10) stage = "Tahap 2 (Berbahaya)";
 
     const nextMutant = 100 * Math.ceil(day / 100) - day;
-
-    const stageOptions = [
-        "Tahap 1 (Normal)",
-        "Tahap 2 (Berbahaya)",
-        "Tahap 3 (Ganas Brutal)",
-    ];
-    const stageIndex = stageOptions.indexOf(stage);
-
-    // Ambil jumlah zombie yang sudah dibunuh
     const killCount = player.getDynamicProperty("zombie_kill_count") ?? 0;
 
-    const form = new ModalFormData()
-        .title("§l§aStatus Zombie Apocalypse")
-        .textField("§7Hari ke-", `${day}`)
-        .textField("§7Tahap Zombie:", `${stage}`)
-        .textField("§7Hari sampai Zombie Mutant:", `${nextMutant}`)
-        .textField("§7Zombie dibunuh:", `${killCount}`);
+    const statusText = `§7Hari ke-: ${day}\n§7Tahap Zombie: ${stage}\n§7Hari sampai Zombie Mutant: ${nextMutant}\n§7Zombie dibunuh: ${killCount}`;
 
-    form.show(player).catch((err) => {
-        world.sendMessage(`§cGagal tampilkan status: ${err}`);
-    });
+    const form = new MessageFormData()
+        .title("§l§aStatus Zombie Apocalypse")
+        .body(statusText)
+        .button1("Tutup")
+        .button2("OK");
+
+    form.show(player)
+        .then((formData /** @type {MessageFormResponse} */) => {
+            if (formData.canceled || formData.selection === undefined) {
+                return;
+            }
+            world.sendMessage(
+                `§aKamu memilih tombol: ${
+                    formData.selection === 0 ? "Tutup" : "OK"
+                }`
+            );
+        })
+        .catch((err) => {
+            world.sendMessage(`§cGagal tampilkan status: ${err}`);
+            return -1;
+        });
 }
