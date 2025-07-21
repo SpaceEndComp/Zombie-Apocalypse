@@ -8,7 +8,7 @@
             }
         },
         "components": {
-            "minecraft:icon": "fire_axe",
+            "minecraft:icon": "fire_axe_icon",
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
             "minecraft:durability": {

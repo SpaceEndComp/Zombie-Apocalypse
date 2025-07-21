@@ -7,7 +7,7 @@
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/entity/mele/fire_axe"
+        "default": "fire_axe"
       },
       "geometry": {
         "default": "geometry.fire_axe"
