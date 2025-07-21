@@ -6,7 +6,8 @@ export function registerDayStatusCommand() {
         if (event.message.trim().toLowerCase() === "!days") {
             event.cancel = true;
             const day = world.getDay();
-            world.sendMessage(`§aHari ke-${day} di dunia ini!`);
+            const player = event.sender;
+            player.sendMessage(`§aHari ke-${day} di dunia ini!`);
         }
     });
 }

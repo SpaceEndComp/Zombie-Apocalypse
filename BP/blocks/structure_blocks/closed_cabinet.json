@@ -2,7 +2,10 @@
     "format_version": "1.20.60",
     "minecraft:block": {
         "description": {
-            "identifier": "za:closed_oak_cabinet"
+            "identifier": "za:closed_oak_cabinet",
+            "menu_category": {
+                "category": "construction"
+            }
         },
         "components": {
             "minecraft:collision_box": {
@@ -32,6 +35,12 @@
                     "decrement_stack": false,
                     "spawn_loot": "loot_tables/loot_cabinet.json"
                 }
+            },
+            "minecraft:material_instances": {
+              "*": {
+                "texture": "cabinet",
+                "render_method": "opaque"
+              }
             }
         }
     }

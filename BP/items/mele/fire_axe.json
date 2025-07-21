@@ -35,8 +35,7 @@
             },
             "minecraft:display_name": {
                 "value": "fire axe"
-            },
-            "minecraft:custom_components": ["za:is_weapon"]
+            }
         }
     }
 }

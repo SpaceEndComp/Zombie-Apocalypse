@@ -26,7 +26,7 @@
         "attack_controller": "controller.animation.mele.attack"
       },
       "render_controllers": [
-        "controller.render.default"
+        "controller.render.item_default"
       ]
     }
   }

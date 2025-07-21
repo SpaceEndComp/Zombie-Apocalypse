@@ -8,13 +8,13 @@
                 "default": "entity_emissive_alpha"
             },
             "textures": {
-                "default": "zombie"
+                "default": "textures/entity/zombies1/zombie"
             },
             "geometry": {
                 "default": "geometry.zombie"
             },
             "spawn_egg": {
-                "texture": "zombie_spawn_egg"
+                "texture": "spawn_egg_zombie"
             }
         }
     }
