@@ -9,7 +9,7 @@ registerDayStatusCommand();
 
 // Initialize the status UI
 world.beforeEvents.chatSend.subscribe((msg) => {
-    if (msg.message.toLowerCase() === "status") {
+    if (msg.message.toLowerCase() === "!status") {
         msg.cancel = true;
         showStatusUI(msg.sender);
     }
@@ -58,7 +58,7 @@ if (world.beforeEvents && world.beforeEvents.entityHurt) {
 const PLAYER_STAMINA_PROP = "stamina";
 const STAMINA_MAX = 100;
 const STAMINA_MIN = 0;
-const STAMINA_RECOVERY = 0.5; // per tick
+const STAMINA_RECOVERY = 2; // per tick
 const STAMINA_DRAIN = 1; // per tick jika lari
 
 function ensurePlayerStaminaProp(player) {
@@ -138,3 +138,16 @@ system.runInterval(() => {
         }
     }
 }, 20); // setiap detik
+
+if (world.afterEvents && world.afterEvents.entityDie) {
+    world.afterEvents.entityDie.subscribe((ev) => {
+        if (
+            ev.deadEntity.typeId === ZOMBIE_ID &&
+            ev.damageSource?.damagingEntity?.typeId === "minecraft:player"
+        ) {
+            const player = ev.damageSource.damagingEntity;
+            const current = player.getDynamicProperty(PLAYER_KILL_PROP) ?? 0;
+            player.setDynamicProperty(PLAYER_KILL_PROP, current + 1);
+        }
+    });
+}

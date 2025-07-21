@@ -1,33 +1,17 @@
 import { world } from "@minecraft/server";
-import { ModalFormData } from "@minecraft/server-ui";
 
 export function showStatusUI(player) {
-    const day = world.getDay();
+    let day = world.getDay();
+    if (day < 1) day = 1;
 
     let stage = "Tahap 1 (Normal)";
     if (day >= 50) stage = "Tahap 3 (Ganas Brutal)";
     else if (day >= 10) stage = "Tahap 2 (Berbahaya)";
 
-    const nextMutant = 100 * Math.ceil(day / 100) - day;
-
-    const stageOptions = [
-        "Tahap 1 (Normal)",
-        "Tahap 2 (Berbahaya)",
-        "Tahap 3 (Ganas Brutal)",
-    ];
-    const stageIndex = stageOptions.indexOf(stage);
-
-    // Ambil jumlah zombie yang sudah dibunuh
+    const nextMutant = 100 - (day % 100);
     const killCount = player.getDynamicProperty("zombie_kill_count") ?? 0;
 
-    const form = new ModalFormData()
-        .title("§l§aStatus Zombie Apocalypse")
-        .textField("§7Hari ke-", `${day}`)
-        .textField("§7Tahap Zombie:", `${stage}`)
-        .textField("§7Hari sampai Zombie Mutant:", `${nextMutant}`)
-        .textField("§7Zombie dibunuh:", `${killCount}`);
+    const statusText = `§7Hari ke-: ${day}\n§7Tahap Zombie: ${stage}\n§7Hari sampai Zombie Mutant: ${nextMutant}\n§7Zombie dibunuh: ${killCount}`;
 
-    form.show(player).catch((err) => {
-        world.sendMessage(`§cGagal tampilkan status: ${err}`);
-    });
+    player.sendMessage(statusText);
 }

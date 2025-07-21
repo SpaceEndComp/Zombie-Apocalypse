@@ -8,6 +8,8 @@ export function dayLeveling() {
         try {
             let day = world.getDay();
 
+            if (day < 1) day = 1;
+
             if (day !== lastCheckDay) {
                 if (!trigerredDays.has(day)) {
                     world.sendMessage(
