@@ -15,6 +15,20 @@
             },
             "spawn_egg": {
                 "texture": "spawn_egg_zombie"
+            },
+            "render_controllers": ["controller.render.zombie"],
+            "animations": {
+                "idle": "animation.zombie_office.idle",
+                "walk": "animation.zombie_office.walk",
+                "attack": "animation.zombie_office.attack",
+                "controller_walk": "controller.animation.zombie_office.walk",
+                "controller_attack": "controller.animation.zombie_office.attack"
+            },
+            "scripts": {
+                "animate": [
+                    "controller_attack",
+                    "controller_attack"
+                ]
             }
         }
     }

@@ -137,7 +137,7 @@ system.runInterval(() => {
             world.sendMessage(text);
         }
     }
-}, 20); // setiap detik
+}, 1); // setiap detik
 
 if (world.afterEvents && world.afterEvents.entityDie) {
     world.afterEvents.entityDie.subscribe((ev) => {
