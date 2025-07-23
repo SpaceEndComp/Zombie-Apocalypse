@@ -18,13 +18,13 @@ export function dayLeveling() {
 
                     if (day === 1) {
                         world.sendMessage(
-                            `§2Zombie tahap 1 muncul. Belum terlalu berbahaya...`
+                            `§2Zombie tahap 1 muncul, hati hati`
                         );
                     }
 
                     if (day === 10) {
                         world.sendMessage(
-                            `§6Zombie tahap 2 berevolusi! Mereka lebih kuat sekarang!`
+                            `§6Zombie tahap 2 berevolusi! Bersiaplah!`
                         );
                     }
 
