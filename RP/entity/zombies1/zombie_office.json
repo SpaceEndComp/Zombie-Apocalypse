@@ -27,7 +27,7 @@
             "scripts": {
                 "animate": [
                     "controller_attack",
-                    "controller_attack"
+                    "controller_walk"
                 ]
             }
         }
