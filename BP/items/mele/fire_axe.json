@@ -26,15 +26,17 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     { "block": "minecraft:planks", "speed": 8 },
-                    {
-                        "block": { "tags": "q.any_tag('wood', 'log')" },
-                        "speed": 8
-                    }
+                    { "block": "minecraft:log", "speed": 8 },
+                    { "block": "minecraft:wood", "speed": 8 },
+                    { "block": "minecraft:stripped_log", "speed": 8 },
+                    { "block": "minecraft:stripped_wood", "speed": 8 },
+                    { "block": "minecraft:wooden_door", "speed": 8 },
+                    { "block": "minecraft:wooden_trapdoor", "speed": 8 }
                 ]
             },
             "minecraft:repairable": {
                 "repair_items": [
-                    { "items": ["minecraft:iron_ingot"], "repair_amount": 125 }
+                    { "items": ["minecraft:iron_ingot"], "repair_amount": 25 }
                 ]
             },
             "minecraft:display_name": {
