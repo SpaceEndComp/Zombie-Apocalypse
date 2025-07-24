@@ -9,7 +9,7 @@ export function dialogDay1(player) {
                 {"text":"§e["},
                 {"selector":"@s"},
                 {"text":"§e]: "},
-                {"translate":"dialog.day1"}
+                {"translate":"dialog.day1.title"}
             ]}`
         );
     }

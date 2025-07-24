@@ -4,7 +4,7 @@ import { showStatusUI } from "./ui/ShowStatusUI";
 import { dialogDay1 } from "./dialog/player";
 
 // memanggil
-dialogDay1();
+dialogDay1(player);
 dayLeveling();
 
 // Initialize the status UI
