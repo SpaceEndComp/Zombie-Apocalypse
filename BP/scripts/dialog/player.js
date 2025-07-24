@@ -5,7 +5,7 @@ export function dialogDay1(player) {
     if (day == 10) {
         // Menggunakan rawtext untuk support translasi
         player.runCommandAsync(
-            `titleraw @s actionbar {"rawtext":[
+            `titleraw @s title {"rawtext":[
                 {"text":"§e["},
                 {"selector":"@s"},
                 {"text":"§e]: "},

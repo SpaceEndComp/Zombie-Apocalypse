@@ -4,11 +4,12 @@
     "description": {
       "identifier": "za:fire_axe",
       "materials": {
-        "default": "entity_alphatest",
-        "enchanted": "entity_alphatest_glint"
+        "default": "models_entity_alphatest",
+        "enchanted": "models_entity_alphatest_glint"
       },
       "textures": {
-        "default": "fire_axe"
+        "default": "fire_axe",
+        "enchanted": "textures/misc/enchanted_item_glint"
       },
       "geometry": {
         "default": "geometry.fire_axe"
