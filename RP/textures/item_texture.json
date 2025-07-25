@@ -5,6 +5,9 @@
     "fire_axe": {
       "textures": "textures/items/fire_axe"
     },
+    "fire_axe_model": {
+      "textures": "textures/entity/mele/fire_axe"
+    },
     "spawn_egg_zombie": {
       "textures": "textures/items/spawn_eggs/spawn_egg_zombie_office"
     }

@@ -1,4 +1,5 @@
 import { world, system } from "@minecraft/server";
+import { dialogDay10 } from "./dialog/player";
 
 export function dayLeveling() {
     let lastCheckDay = -1;
@@ -26,6 +27,9 @@ export function dayLeveling() {
                         world.sendMessage(
                             `§6Zombie tahap 2 berevolusi! Bersiaplah!`
                         );
+                        for (const player of world.getPlayers()) {
+                            dialogDay10(player);
+                        }
                     }
 
                     if (day === 50) {
