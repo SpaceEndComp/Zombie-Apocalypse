@@ -27,7 +27,7 @@
                 "minecraft:biome_filter": {
                     "test": "has_biome_tag",
                     "operator": "==",
-                    "value": "zombie"
+                    "value": "monster"
                 }
             },
             {
@@ -52,7 +52,7 @@
                 "minecraft:biome_filter": {
                     "test": "has_biome_tag",
                     "operator": "==",
-                    "value": "zombie"
+                    "value": "monster"
                 }
             }
         ]

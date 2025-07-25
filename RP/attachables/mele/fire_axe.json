@@ -2,14 +2,12 @@
   "format_version": "1.20.60",
   "minecraft:attachable": {
     "description": {
-      "identifier": "za:fire_axe",
+      "identifier": "za:fire_fighter_axe",
       "materials": {
-        "default": "models_entity_alphatest",
-        "enchanted": "models_entity_alphatest_glint"
+        "default": "models_entity_alphatest"
       },
       "textures": {
-        "default": "fire_axe",
-        "enchanted": "textures/misc/enchanted_item_glint"
+        "default": "fire_axe"
       },
       "geometry": {
         "default": "geometry.fire_axe"

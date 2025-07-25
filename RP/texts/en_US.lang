@@ -1,4 +1,4 @@
 entity.za:zombie.name=Zombie Office
 item.spawn_egg.entity.za:zombie.name=Zombie Office Spawn Egg
-item.za:fire_axe.name=Fire Axe
-dialog.day10.title=It's been 10 days since the zombie apocalypse began, somehow the atmosphere around has become more eerie
+item.za:fire_fighter_axe.name=Fire Fighter Axe
+dialog.day10.title=Strange, the atmosphere feels different

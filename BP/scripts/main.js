@@ -1,10 +1,10 @@
 import { dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
-import { dialogDay1 } from "./dialog/player";
+import { dialogDay10 } from "./dialog/player";
 
 // memanggil
-dialogDay1(player);
+dialogDay10();
 dayLeveling();
 
 // Initialize the status UI

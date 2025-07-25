@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server";
 
-export function dialogDay1(player) {
+export function dialogDay10(player) {
     const day = world.getDay();
     if (day == 10) {
         // Menggunakan rawtext untuk support translasi
@@ -9,7 +9,7 @@ export function dialogDay1(player) {
                 {"text":"§e["},
                 {"selector":"@s"},
                 {"text":"§e]: "},
-                {"translate":"dialog.day1.title"}
+                {"translate":"dialog.day10.title"}
             ]}`
         );
     }
