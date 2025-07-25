@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.10",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "za:fire_fighter_axe",

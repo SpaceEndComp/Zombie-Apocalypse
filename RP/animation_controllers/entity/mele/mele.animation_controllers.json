@@ -21,14 +21,15 @@
 		"controller.animation.mele.attack": {
 			"states": {
 				"default": {
+					"animations": ["wielding_controller"],
 					"transitions": [
-						{ "attack": "c.is_first_person && q.is_using_item && q.item_remaining_use_duration == q.item_max_use_duration" }
+						{ "attack": "variable.attack_time > 0" }
 					]
 				},
 				"attack": {
 					"animations": ["attack"],
 					"transitions": [
-						{"default": "q.anim_time >= 0.5"}
+						{"default": "q.any_animation_finished"}
 					]
 				}
 			}

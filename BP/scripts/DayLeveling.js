@@ -1,5 +1,5 @@
 import { world, system } from "@minecraft/server";
-import { dialogDay10 } from "./dialog/player";
+import { dialogDay10 } from "./player/dialog/player";
 
 export function dayLeveling() {
     let lastCheckDay = -1;
