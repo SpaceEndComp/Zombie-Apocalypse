@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.94",
+    "format_version": "1.21.80",
     "minecraft:item": {
         "description": {
             "identifier": "seza:crowbar",
@@ -13,7 +13,13 @@
             },
             "minecraft:icon": "crowbar",
             "minecraft:max_stack_size": 1,
-            "minecraft:hand_equipped": true
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 250
+            },
+            "minecraft:custom_components": [
+                "seza:pry_plank"
+            ]
         }
     }
 }

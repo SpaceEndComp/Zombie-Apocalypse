@@ -1,10 +1,10 @@
 import { dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
-import { initializeFireFighterAxeLogic } from "./item/meleSystem";
+import { FireFighterAxeLogic } from "./item/meleSystem";
 
 // memanggil
-initializeFireFighterAxeLogic();
+FireFighterAxeLogic();
 dayLeveling();
 
 // Initialize the status UI
@@ -109,16 +109,3 @@ system.runInterval(() => {
         }
     }
 }, 5); // setiap detik
-
-if (world.afterEvents && world.afterEvents.entityDie) {
-    world.afterEvents.entityDie.subscribe((ev) => {
-        if (
-            ev.deadEntity.typeId === ZOMBIE_ID &&
-            ev.damageSource?.damagingEntity?.typeId === "minecraft:player"
-        ) {
-            const player = ev.damageSource.damagingEntity;
-            const current = player.getDynamicProperty(PLAYER_KILL_PROP) ?? 0;
-            player.setDynamicProperty(PLAYER_KILL_PROP, current + 1);
-        }
-    });
-}

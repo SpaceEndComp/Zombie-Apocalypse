@@ -23,7 +23,7 @@
 				"default": {
 					"animations": ["wielding_controller"],
 					"transitions": [
-						{ "attack": "variable.attack_time > 0" }
+						{ "attack": "q.is_attacking" }
 					]
 				},
 				"attack": {

@@ -12,8 +12,13 @@
 			},
 			"bones": [
 				{
+					"name": "rightArm",
+					"pivot": [0, 0, 0]
+				},
+				{
 					"name": "crowbar",
-					"pivot": [0, 0, 0],
+					"parent": "rightArm",
+					"pivot": [0, 22.4, 0],
 					"cubes": [
 						{
 							"origin": [0, 2, -1],
