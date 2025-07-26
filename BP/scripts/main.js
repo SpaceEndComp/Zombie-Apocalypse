@@ -2,6 +2,7 @@ import { dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
 import { initializeFireFighterAxeLogic } from "./item/meleSystem";
+import { raycastShoot } from "./gun/logic_pistol";
 
 // memanggil
 initializeFireFighterAxeLogic();
@@ -122,3 +123,10 @@ if (world.afterEvents && world.afterEvents.entityDie) {
         }
     });
 }
+
+// Menambahkan event untuk mendeteksi pemain yang menggunakan pistol
+world.beforeEvents.itemUse.subscribe((e) => {
+    if (e.itemStack.typeId === "minecraft:carrot_on_a_stick") {
+        raycastShoot(e.source);
+    }
+});
