@@ -10,6 +10,18 @@
     },
     "spawn_egg_zombie": {
       "textures": "textures/items/spawn_eggs/spawn_egg_zombie_office"
+    },
+    "bandage": {
+      "textures": "textures/items/medicals/bandage"
+    },
+    "medkit": {
+      "textures": "textures/items/medicals/medkit"
+    },
+    "water_bottle": {
+      "textures": "textures/items/consumables/water_bottle"
+    },
+    "burger": {
+      "textures": "textures/items/consumables/burger"
     }
   }
 }
