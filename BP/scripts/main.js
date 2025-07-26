@@ -48,7 +48,7 @@ if (world.beforeEvents && world.beforeEvents.entityHurt) {
                 // Terapkan efek khusus, misal slow
                 hurtEntity.addEffect(EffectType.get("slowness"), 100, {
                     amplifier: 1,
-                    showParticles: true,
+                    showParticles: false,
                 });
             }
         }
