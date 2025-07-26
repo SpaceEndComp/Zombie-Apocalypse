@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.94",
+    "format_version": "1.21.80",
     "minecraft:item": {
         "description": {
             "identifier": "za:fire_fighter_axe",
@@ -17,7 +17,6 @@
             "minecraft:durability": {
                 "max_durability": 250
             },
-            "minecraft:damage": 8,
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [
