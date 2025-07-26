@@ -16,10 +16,7 @@
             "minecraft:hand_equipped": true,
             "minecraft:durability": {
                 "max_durability": 250
-            },
-            "minecraft:custom_components": [
-                "seza:pry_plank"
-            ]
+            }
         }
     }
 }
