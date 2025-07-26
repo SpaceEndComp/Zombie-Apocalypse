@@ -1,9 +1,0 @@
-{
-  "resource_pack_name": "zombie_apocalypse",
-  "texture_name": "atlas.terrain",
-  "texture_data": {
-    "cabinet": {
-      "textures": "textures/blocks/planks_oak"
-    }
-  }
-} 

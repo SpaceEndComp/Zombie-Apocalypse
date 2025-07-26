@@ -2,12 +2,12 @@
   "format_version": "1.20.60",
   "minecraft:attachable": {
     "description": {
-      "identifier": "za:fire_axe",
+      "identifier": "za:fire_fighter_axe",
       "materials": {
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "fire_axe"
+        "default": "textures/entity/mele/fire_axe"
       },
       "geometry": {
         "default": "geometry.fire_axe"
@@ -26,7 +26,7 @@
         "attack_controller": "controller.animation.mele.attack"
       },
       "render_controllers": [
-        "controller.render.default"
+        "controller.render.item_default"
       ]
     }
   }

@@ -1,13 +1,16 @@
 {
-    "format_version": "1.21.10",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
-            "identifier": "za:fire_axe",
+            "identifier": "za:fire_fighter_axe",
             "menu_category": {
-                "category": "items"
+                "category": "equipment"
             }
         },
         "components": {
+            "minecraft:display_name": {
+                "value": "item.za:fire_fighter_axe.name"
+            },
             "minecraft:icon": "fire_axe",
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -15,28 +18,17 @@
                 "max_durability": 250
             },
             "minecraft:damage": 8,
-            "minecraft:wearable": {
-                "slot": "slot.weapon.mainhand"
-            },
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [
-                    { "block": "minecraft:planks", "speed": 8 },
-                    {
-                        "block": { "tags": "q.any_tag('wood', 'log')" },
-                        "speed": 8
-                    }
+                    { "block": { "tags": "query.any_tag('wood')"}, "speed": 8}
                 ]
             },
             "minecraft:repairable": {
                 "repair_items": [
-                    { "items": ["minecraft:iron_ingot"], "repair_amount": 125 }
+                    { "items": ["minecraft:iron_ingot"], "repair_amount": 25 }
                 ]
-            },
-            "minecraft:display_name": {
-                "value": "fire axe"
-            },
-            "minecraft:custom_components": ["za:is_weapon"]
+            }
         }
     }
 }

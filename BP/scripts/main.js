@@ -1,11 +1,11 @@
 import { dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
-import { registerDayStatusCommand } from "./dayStatus";
+import { initializeFireFighterAxeLogic } from "./item/meleSystem";
 
 // memanggil
+initializeFireFighterAxeLogic();
 dayLeveling();
-registerDayStatusCommand();
 
 // Initialize the status UI
 world.beforeEvents.chatSend.subscribe((msg) => {
@@ -24,35 +24,6 @@ function ensurePlayerKillProp(player) {
     if (player.getDynamicProperty(PLAYER_KILL_PROP) === undefined) {
         player.setDynamicProperty(PLAYER_KILL_PROP, 0);
     }
-}
-
-// Daftarkan komponen custom agar warning hilang
-if (typeof world.registerComponent === "function") {
-    world.registerComponent("za:is_weapon", {});
-}
-
-// --- Fire Axe Custom Logic (pakai entityHurt) ---
-const FIRE_AXE_ID = "za:fire_axe";
-
-if (world.beforeEvents && world.beforeEvents.entityHurt) {
-    world.beforeEvents.entityHurt.subscribe((ev) => {
-        const { hurtEntity, damageSource } = ev;
-        const attacker = damageSource.damagingEntity;
-        if (attacker?.typeId === "minecraft:player") {
-            // Cek item di tangan pemain
-            const inventory = attacker.getComponent("minecraft:inventory");
-            const mainHand = inventory?.container?.getItem(
-                attacker.selectedSlot
-            );
-            if (mainHand && mainHand.typeId === FIRE_AXE_ID) {
-                // Terapkan efek khusus, misal slow
-                hurtEntity.addEffect(EffectType.get("slowness"), 100, {
-                    amplifier: 1,
-                    showParticles: false,
-                });
-            }
-        }
-    });
 }
 
 const PLAYER_STAMINA_PROP = "stamina";
@@ -111,7 +82,7 @@ system.runInterval(() => {
             player.removeEffect("minecraft:slowness");
         }
     }
-}, 1); // tiap tick
+}, 5); // tiap tick
 
 // Tampilkan bar stamina di action bar setiap detik
 system.runInterval(() => {
@@ -137,7 +108,7 @@ system.runInterval(() => {
             world.sendMessage(text);
         }
     }
-}, 20); // setiap detik
+}, 5); // setiap detik
 
 if (world.afterEvents && world.afterEvents.entityDie) {
     world.afterEvents.entityDie.subscribe((ev) => {
