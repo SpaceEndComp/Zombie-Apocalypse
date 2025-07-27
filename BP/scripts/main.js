@@ -15,6 +15,14 @@ world.beforeEvents.chatSend.subscribe((msg) => {
     }
 });
 
+// Initialize the raycast shooting logic
+world.beforeEvents.itemUse.subscribe((e) => {
+    if (e.itemStack.typeId === "minecraft:carrot_on_a_stick") {
+        raycastShoot(e.source);
+    }
+});
+
+
 // --- Zombie Kill Tracker ---
 const ZOMBIE_ID = "za:zombie";
 const PLAYER_KILL_PROP = "zombie_kill_count";
