@@ -249,6 +249,14 @@
 					"rotation": [-5, 0, -2.5]
 				}
 			}
+		},
+		"animation.zombie_office.look_at_target": {
+			"loop": true,
+			"bones": {
+				"Head": {
+					"rotation": ["query.target_x_rotation", "query.target_y_rotation", 0]
+				}
+			}
 		}
 	}
 }

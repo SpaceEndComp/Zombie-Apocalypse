@@ -44,21 +44,27 @@
 			}
 		},
 		"controller.animation.zombie_office.sniffing": {
-			"initial_state": "idle",
+			"initial_state": "default",
 			"states": {
-				"idle": {
-					"animations": ["idle"],
+				"default": {
 					"transitions": [
-						{"snif": "query.is_sniffing"}
+						{ "sniffing": "query.is_sniffing" }
 					]
 				},
-				"snif": {
-					"animations": ["sniffing"],
+				"sniffing": {
+					"animations": [ "sniffing" ],
 					"transitions": [
-						{"idle": "!query.is_sniffing"}
-					],
-					"blend_transition": 0.2,
-					"blend_via_shortest_path": true
+						{ "default": "!query.is_sniffing" }
+					]
+				}
+			}
+		},
+		"controller.animation.zombie_office.look_at_target": {
+			"states": {
+				"look_at_target": {
+					"animations": [
+						{ "look_at_target": "query.has_target" }
+					]
 				}
 			}
 		}

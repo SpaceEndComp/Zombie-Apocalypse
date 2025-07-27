@@ -1,6 +1,7 @@
 import { dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
+import "./player/chat/chatLokal.js";
 
 // memanggil
 dayLeveling();
@@ -71,7 +72,7 @@ system.runInterval(() => {
         if (stamina < STAMINA_MIN) stamina = STAMINA_MIN;
         player.setDynamicProperty(PLAYER_STAMINA_PROP, stamina);
 
-        // Logika slowness yang lebih responsif
+        // Tambahkan efek slowness jika stamina <= STAMINA_MIN, hilangkan jika >= 30
         if (stamina <= STAMINA_MIN) {
             player.addEffect("minecraft:slowness", 2, {
                 amplifier: 5,
@@ -80,17 +81,36 @@ system.runInterval(() => {
         } else if (stamina >= 70) {
             player.removeEffect("minecraft:slowness");
         }
+    }
+}, 5); // tiap tick
 
+// Tampilkan bar stamina di action bar setiap detik
+system.runInterval(() => {
+    for (const player of world.getPlayers()) {
+        const stamina =
+            player.getDynamicProperty(PLAYER_STAMINA_PROP) ?? STAMINA_MAX;
         // Buat bar stamina visual
         const barLength = 20;
         const filled = Math.round((stamina / STAMINA_MAX) * barLength);
         const empty = barLength - filled;
         const bar = `§a${"|".repeat(filled)}§7${"|".repeat(empty)}`;
         const text = `§lStamina: ${bar} §f${parseInt(stamina)}`;
-        // Gunakan API onScreenDisplay yang lebih modern dan efisien
-        player.onScreenDisplay.setActionBar(text);
+        // Kirim ke action bar (subtitle) dengan fallback
+        if (typeof player.runCommandAsync === "function") {
+            player.runCommandAsync(
+                `titleraw @s actionbar {\"rawtext\":[{\"text\":\"${text}\"}]}`
+            );
+        } else if (typeof player.runCommand === "function") {
+            player.runCommand(
+                `titleraw @s actionbar {\"rawtext\":[{\"text\":\"${text}\"}]}`
+            );
+        } else {
+            world.sendMessage(text);
+        }
     }
-}, 10); // Dijalankan setiap 10 tick (0.5 detik)
+}, 5); // setiap detik
+
+
 
 
 
@@ -144,15 +164,17 @@ if (world.afterEvents && world.afterEvents.entityDie && world.afterEvents.entity
         let skip = false
         if (!playersItemCD[player.nameTag]) { playersItemCD[player.nameTag] = currentTime; skip = true }
 
-        const itemConfig = itemsConfig[item.typeId];
+
         if (!skip) {
             let timeDiff = (currentTime - playersItemCD[player.nameTag])/1000
-            if (!(timeDiff >= itemConfig.cd)) return
+            if (!(timeDiff >= itemsConfig[item.typeId].cd)) return
             playersItemCD[player.nameTag] = currentTime
         }
 
-        // PERBAIKAN: Berikan damage secara langsung tanpa timeout dan gunakan nilai dari config
-        entityHit.applyDamage(itemConfig.dmg, { cause: "entityAttack", damagingEntity: player });
-        player.playSound("note.pling", {pitch: 1.5}); // Suara dimainkan saat damage berhasil diberikan
+        system.runTimeout(() => {
+            player.playSound("note.pling", {pitch: 1.5}) // This line also plays a sound when it deals dmg to the target, you can also remove this in the finale product
+            if (!entityHit) return
+            entityHit.applyDamage(8, { cause: "entityAttack", damagingEntity: player })
+        }, itemsConfig[item.typeId].cd*20)
     })
 }
