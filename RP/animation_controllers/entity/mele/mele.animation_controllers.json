@@ -19,17 +19,17 @@
 			}
 		},
 		"controller.animation.mele.attack": {
+			"initial_state": "default",
 			"states": {
 				"default": {
-					"animations": ["wielding_controller"],
 					"transitions": [
-						{ "attack": "q.is_attacking" }
+						{ "attack": "q.is_item_name_any(slot.weapon.mainhand, 0, cihuy)" }
 					]
 				},
 				"attack": {
 					"animations": ["attack"],
 					"transitions": [
-						{"default": "q.any_animation_finished"}
+						{ "default": "q.any_animation_finished" }
 					]
 				}
 			}

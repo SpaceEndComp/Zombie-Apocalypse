@@ -11,7 +11,7 @@
                 "default": "textures/entity/zombies1/zombie"
             },
             "geometry": {
-                "default": "geometry.zombie"
+                "default": "geometry.zombie_office"
             },
             "spawn_egg": {
                 "texture": "spawn_egg_zombie"
@@ -21,13 +21,16 @@
                 "idle": "animation.zombie_office.idle",
                 "walk": "animation.zombie_office.walk",
                 "attack": "animation.zombie_office.attack",
+                "sniffing": "animation.zombie_office.sniffing",
                 "controller_walk": "controller.animation.zombie_office.walk",
-                "controller_attack": "controller.animation.zombie_office.attack"
+                "controller_attack": "controller.animation.zombie_office.attack",
+                "controller_sniffing": "controller.animation.zombie_office.sniffing"
             },
             "scripts": {
                 "animate": [
                     "controller_attack",
-                    "controller_walk"
+                    "controller_walk",
+                    "controller_sniffing"
                 ]
             }
         }
