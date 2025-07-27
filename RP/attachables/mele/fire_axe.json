@@ -2,7 +2,7 @@
   "format_version": "1.20.60",
   "minecraft:attachable": {
     "description": {
-      "identifier": "za:fire_fighter_axe",
+      "identifier": "seza:fire_fighter_axe",
       "materials": {
         "default": "entity_alphatest"
       },

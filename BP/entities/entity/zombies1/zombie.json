@@ -2,7 +2,7 @@
     "format_version": "1.21.60",
     "minecraft:entity": {
         "description": {
-            "identifier": "za:zombie",
+            "identifier": "seza:zombie",
             "is_spawnable": true,
             "is_summonable": true
         },

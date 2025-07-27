@@ -60,11 +60,10 @@
 			}
 		},
 		"controller.animation.zombie_office.look_at_target": {
+			"initial_state": "looking",
 			"states": {
-				"look_at_target": {
-					"animations": [
-						{ "look_at_target": "query.has_target" }
-					]
+				"looking": {
+					"animations": ["look_at_target"]
 				}
 			}
 		}

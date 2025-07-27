@@ -1,5 +1,5 @@
-entity.za:zombie.name=Zombie Office
-item.spawn_egg.entity.za:zombie.name=Zombie Office Spawn Egg
-item.za:fire_fighter_axe.name=Fire Fighter Axe
+entity.seza:zombie.name=Zombie Office
+item.spawn_egg.entity.seza:zombie.name=Zombie Office Spawn Egg
+item.seza:fire_fighter_axe.name=Fire Fighter Axe
 item.seza:crowbar.name=Crowbar
 dialog.day10.title=Strange, the atmosphere feels different
