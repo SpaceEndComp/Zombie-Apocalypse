@@ -42,6 +42,25 @@
 					"blend_via_shortest_path": true
 				}
 			}
+		},
+		"controller.animation.zombie_office.sniffing": {
+			"initial_state": "idle",
+			"states": {
+				"idle": {
+					"animations": ["idle"],
+					"transitions": [
+						{"snif": "query.is_sniffing"}
+					]
+				},
+				"snif": {
+					"animations": ["sniffing"],
+					"transitions": [
+						{"idle": "!query.is_sniffing"}
+					],
+					"blend_transition": 0.2,
+					"blend_via_shortest_path": true
+				}
+			}
 		}
 	}
 }

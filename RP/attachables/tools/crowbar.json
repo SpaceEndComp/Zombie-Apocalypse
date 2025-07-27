@@ -14,8 +14,7 @@
             },
             "scripts": {
                 "animate": [
-                    "wield_first_person",
-                    "wield_third_person",
+                    "wielding_controller",
                     "attack_controller"
                 ]
             },

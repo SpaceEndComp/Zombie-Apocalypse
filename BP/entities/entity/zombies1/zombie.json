@@ -32,6 +32,7 @@
                 "is_pushable": true,
                 "is_pushable_by_piston": true
             },
+            "minecraft:suspect_tracking": {},
             "minecraft:navigation.walk": {
                 "can_path_over_water": true
             },
@@ -71,24 +72,32 @@
                     }
                 }
             },
-            "minecraft:behavior.melee_attack": {
+            "minecraft:behavior.look_at_target": {
                 "priority": 3,
+                "look_distance": 8
+            },
+            "minecraft:behavior.melee_attack": {
+                "priority": 4,
                 "speed_multiplier": 1.2,
                 "track_target": true
             },
             "minecraft:behavior.random_stroll": {
-                "priority": 4,
+                "priority": 5,
                 "speed_multiplier": 0.8
             },
             "minecraft:behavior.random_swim": {
-                "priority": 5
+                "priority": 6
             },
             "minecraft:behavior.look_at_player": {
-                "priority": 6,
+                "priority": 7,
                 "look_distance": 8
             },
             "minecraft:behavior.random_look_around": {
-                "priority": 7
+                "priority": 8
+            },
+            "minecraft:behavior.sniff": {
+                "sniffing_radius": 5,
+                "priority": 9
             }
         }
     }
