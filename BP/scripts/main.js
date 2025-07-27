@@ -181,7 +181,7 @@ if (
             skip = true;
         }
 
-
+        const itemConfig = itemsConfig[item.typeId];
         if (!skip) {
             let timeDiff = (currentTime - playersItemCD[player.nameTag])/1000
             if (!(timeDiff >= itemsConfig[item.typeId].cd)) return
