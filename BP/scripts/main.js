@@ -5,7 +5,8 @@ import { raycastShoot } from "./gun/logic_pistol";
 import "./player/chat/chatLokal.js";
 import { initializeHitDelaySystem } from "./item/meleHitDelays.js";
 import "./item/crowbar_logic.js";
-import { initializeStaminaSystem, drainStamina } from "./ui/StaminaBar.js";
+import { initializeCustomStaminaBar } from "./ui/StaminaBar.js";
+import "./player/leveling/PlayerLeveling.js"
 
 // memanggil
 dayLeveling();
