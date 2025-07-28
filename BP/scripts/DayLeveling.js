@@ -1,5 +1,6 @@
 import { world, system } from "@minecraft/server";
 import { dialogDay10 } from "./player/dialog/player";
+import { showStatusUI } from "./ui/ShowStatusUI";
 
 export function dayLeveling() {
     let lastCheckDay = -1;
@@ -18,9 +19,7 @@ export function dayLeveling() {
                     );
 
                     if (day === 1) {
-                        world.sendMessage(
-                            `§2Zombie tahap 1 muncul, hati hati`
-                        );
+                        world.sendMessage(`§2Zombie tahap 1 muncul, hati hati`);
                     }
 
                     if (day === 10) {
@@ -51,4 +50,29 @@ export function dayLeveling() {
             world.sendMessage(`§l§cTerjadi kesalahan: ${e.message}`);
         }
     }, 20);
+}
+
+export function crazyNight() {
+    system.runInterval(() => {
+        const time = world.getTimeOfDay();
+        const isNight = time >= 13000 || time <= 1000;
+
+        for (const entity of world.getEntity()) {
+            if (entity.typeId === "seza:zombie") {
+                if (isNight) {
+                    entity.addEffect("minecraft:speed", 999999, {
+                        amplifier: 1,
+                        showParticles: false,
+                    });
+                    entity.addEffect("minecraft:strength", 999999, {
+                        amplifier: 3,
+                        showParticles: false,
+                    });
+                } else {
+                    entity.removeEffect("minecraft:speed");
+                    entity.removeEffect("minecraft:strength");
+                }
+            }
+        }
+    });
 }

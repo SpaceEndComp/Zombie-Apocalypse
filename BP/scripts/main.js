@@ -1,4 +1,4 @@
-import { dayLeveling } from "./DayLeveling";
+import { crazyNight, dayLeveling } from "./DayLeveling";
 import { world, EffectType, system } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
 import { raycastShoot } from "./gun/logic_pistol";
@@ -10,6 +10,7 @@ import "./player/leveling/PlayerLeveling.js";
 
 // memanggil
 dayLeveling();
+crazyNight();
 initializeHitDelaySystem();
 initializeStaminaSystem(); // Inisialisasi sistem stamina baru
 
@@ -27,7 +28,6 @@ world.beforeEvents.itemUse.subscribe((e) => {
         raycastShoot(e.source);
     }
 });
-
 
 // --- Zombie Kill Tracker ---
 const ZOMBIE_ID = "seza:zombie";
@@ -47,5 +47,3 @@ world.afterEvents.entityJump.subscribe((event) => {
         drainStamina(player, 5); // Kurangi stamina 5 setiap lompat
     }
 });
-
-
