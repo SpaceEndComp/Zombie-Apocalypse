@@ -1,114 +1,143 @@
 import { world, system } from "@minecraft/server";
 
-// Stamina bar configuration
+// Konfigurasi stamina
 const STAMINA_MAX = 100;
-const STAMINA_BAR_LENGTH = 10; // 10 bars, setiap bar 10% stamina
-const STAMINA_PER_BAR = STAMINA_MAX / STAMINA_BAR_LENGTH; // 10% per bar
+const STAMINA_BAR_LENGTH = 10;
+const STAMINA_REGEN = 1; // per tick
+const STAMINA_DRAIN = 2; // per aksi berat (misal: lari/lompat)
+const USE_VANILLA_STYLE = true; // Set true untuk tampilan mirip vanilla
 
-// Custom texture stamina icons
-const STAMINA_TEXTURES = {
-    FULL: "stamina_full",    // 10% stamina (hijau)
-    HALF: "stamina_half",    // 5% stamina (kuning)
-    EMPTY: "stamina_empty"   // 0% stamina (abu-abu)
-};
-
-// Function to get stamina icon based on stamina value
-function getStaminaIcon(stamina, barIndex) {
-    const barStartStamina = barIndex * STAMINA_PER_BAR;
-    const staminaInBar = Math.max(0, Math.min(STAMINA_PER_BAR, stamina - barStartStamina));
-    
-    if (staminaInBar >= STAMINA_PER_BAR) {
-        return STAMINA_TEXTURES.FULL; // 10% - Full bar
-    } else if (staminaInBar >= STAMINA_PER_BAR / 2) {
-        return STAMINA_TEXTURES.HALF; // 5% - Half bar
-    } else {
-        return STAMINA_TEXTURES.EMPTY; // 0% - Empty bar
-    }
+// Mendapatkan stamina pemain
+function getStamina(player) {
+    return player.getDynamicProperty("stamina") ?? STAMINA_MAX;
 }
 
-// Function to create stamina bar with custom textures
+// Set stamina pemain
+function setStamina(player, value) {
+    player.setDynamicProperty("stamina", Math.max(0, Math.min(STAMINA_MAX, value)));
+}
+
+// Membuat bar stamina unicode yang mirip vanilla
 function createStaminaBar(stamina) {
-    let bar = "";
-    
-    for (let i = 0; i < STAMINA_BAR_LENGTH; i++) {
-        const icon = getStaminaIcon(stamina, i);
-        bar += `§r${icon} `; // §r untuk reset color, space untuk spacing
-    }
-    
-    return bar.trim();
-}
-
-// Function to get stamina color based on percentage
-function getStaminaColor(stamina) {
-    const percentage = (stamina / STAMINA_MAX) * 100;
-    
-    if (percentage >= 70) {
-        return "§a"; // Hijau - stamina tinggi
-    } else if (percentage >= 30) {
-        return "§e"; // Kuning - stamina sedang
-    } else {
-        return "§c"; // Merah - stamina rendah
-    }
-}
-
-// Function to show stamina bar to player
-function showStaminaBar(player) {
-    const stamina = player.getDynamicProperty("stamina") ?? STAMINA_MAX;
-    const staminaBar = createStaminaBar(stamina);
-    const staminaColor = getStaminaColor(stamina);
-    const percentage = Math.round((stamina / STAMINA_MAX) * 100);
-    
-    // Create stamina bar text
-    const staminaText = `${staminaColor}⚡ Stamina: ${staminaBar} §f${percentage}%`;
-    
-    try {
-        // Show in action bar
-        player.runCommandAsync(`titleraw @s actionbar {"rawtext":[{"text":"${staminaText}"}]}`);
-    } catch (error) {
-        // Fallback ke Unicode jika texture gagal
-        console.warn(`Failed to show custom stamina bar, using fallback: ${error}`);
-        showFallbackStaminaBar(player, stamina);
-    }
-}
-
-// Fallback stamina bar menggunakan Unicode
-function showFallbackStaminaBar(player, stamina) {
     const filled = Math.round((stamina / STAMINA_MAX) * STAMINA_BAR_LENGTH);
     const empty = STAMINA_BAR_LENGTH - filled;
-    const staminaColor = getStaminaColor(stamina);
-    const percentage = Math.round((stamina / STAMINA_MAX) * 100);
+    let color = "§a"; // hijau
+    if (stamina < 30) color = "§c"; // merah
+    else if (stamina < 70) color = "§e"; // kuning
     
-    const fallbackBar = `§a${"⚡".repeat(filled)}§7${"⚡".repeat(empty)}`;
-    const staminaText = `${staminaColor}⚡ Stamina: ${fallbackBar} §f${percentage}%`;
-    
-    try {
-        player.runCommandAsync(`titleraw @s actionbar {"rawtext":[{"text":"${staminaText}"}]}`);
-    } catch (error) {
-        console.warn(`Failed to show fallback stamina bar: ${error}`);
+    if (USE_VANILLA_STYLE) {
+        return `${color}${"█".repeat(filled)}§7${"░".repeat(empty)}`;
+    } else {
+        return `${color}${"|".repeat(filled)}§7${".".repeat(empty)}`;
     }
 }
 
-// Function to show stamina bar to all players
+// Tampilkan stamina bar di atas hunger bar (title)
+function showStaminaBar(player) {
+    const stamina = getStamina(player);
+    const bar = createStaminaBar(stamina);
+    const percent = Math.round((stamina / STAMINA_MAX) * 100);
+    
+    try {
+        if (USE_VANILLA_STYLE) {
+            // Tampilan mirip vanilla: title untuk label, subtitle untuk bar
+            const titleText = `§fStamina`;
+            const subtitleText = `${bar} §f${percent}%`;
+            
+            if (typeof player.runCommandAsync === "function") {
+                player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`).catch(() => {
+                    player.runCommand(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`);
+                });
+                player.runCommandAsync(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`).catch(() => {
+                    player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`);
+                });
+            } else if (typeof player.runCommand === "function") {
+                player.runCommand(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`);
+                player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`);
+            }
+        } else {
+            // Tampilan lama: semua dalam satu bar
+            const text = `§fStamina: ${bar} §f${percent}%`;
+            if (typeof player.runCommandAsync === "function") {
+                player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`).catch(() => {
+                    player.runCommand(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`);
+                });
+            } else if (typeof player.runCommand === "function") {
+                player.runCommand(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`);
+            }
+        }
+    } catch (e) {
+        // Abaikan error jika command tidak berhasil
+        console.warn("Failed to show stamina bar:", e);
+    }
+}
+
+// Regenerasi stamina otomatis
+function regenStamina(player) {
+    const stamina = getStamina(player);
+    if (stamina < STAMINA_MAX) {
+        setStamina(player, stamina + STAMINA_REGEN);
+    }
+}
+
+// Kurangi stamina (panggil saat aksi berat)
+function drainStamina(player, amount = STAMINA_DRAIN) {
+    const stamina = getStamina(player);
+    setStamina(player, stamina - amount);
+}
+
+// Clear stamina bar (untuk pemain yang offline atau saat reset)
+function clearStaminaBar(player) {
+    try {
+        if (typeof player.runCommandAsync === "function") {
+            player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":""}]}`).catch(() => {
+                player.runCommand(`titleraw @s title {"rawtext":[{"text":""}]}`);
+            });
+            player.runCommandAsync(`titleraw @s subtitle {"rawtext":[{"text":""}]}`).catch(() => {
+                player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":""}]}`);
+            });
+        } else if (typeof player.runCommand === "function") {
+            player.runCommand(`titleraw @s title {"rawtext":[{"text":""}]}`);
+            player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":""}]}`);
+        }
+    } catch (e) {
+        console.warn("Failed to clear stamina bar:", e);
+    }
+}
+
+// Update stamina bar semua pemain
 function updateAllStaminaBars() {
     for (const player of world.getPlayers()) {
         showStaminaBar(player);
+        regenStamina(player);
     }
 }
 
-// Initialize custom stamina bar system
-function initializeCustomStaminaBar() {
-    // Update stamina bar setiap 5 ticks (4 kali per detik)
+// Inisialisasi sistem stamina
+function initializeStaminaSystem() {
+    // Clear title untuk semua pemain saat start
+    for (const player of world.getPlayers()) {
+        clearStaminaBar(player);
+    }
+    
+    // Subscribe ke player leave event untuk clear title
+    world.afterEvents.playerLeave.subscribe((event) => {
+        // Clear title saat player leave (gunakan playerName untuk tracking)
+        const playerName = event.playerName;
+        // Note: Tidak bisa clear title untuk player yang sudah offline
+        // Title akan otomatis hilang saat player leave
+    });
+    
     system.runInterval(() => {
         updateAllStaminaBars();
-    }, 5);
+    }, 5); // 4x per detik
 }
 
-// Export functions
-export { 
-    showStaminaBar, 
-    updateAllStaminaBars, 
-    initializeCustomStaminaBar,
-    createStaminaBar,
-    getStaminaColor,
-    getStaminaIcon
+// Export fungsi
+export {
+    initializeStaminaSystem,
+    drainStamina,
+    getStamina,
+    setStamina,
+    clearStaminaBar
 }; 

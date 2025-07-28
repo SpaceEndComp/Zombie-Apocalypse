@@ -14,8 +14,28 @@ let itemsConfig = {
 };
 let playersItemCD = {}; // keep this empty, but dont remove this line
 
+// Cleanup offline players from cooldown tracking
+function cleanupOfflinePlayers() {
+    const onlinePlayers = new Set();
+    for (const player of world.getPlayers()) {
+        onlinePlayers.add(player.nameTag || player.name || "Unknown");
+    }
+    
+    // Remove offline players from cooldown tracking
+    for (const playerName in playersItemCD) {
+        if (!onlinePlayers.has(playerName)) {
+            delete playersItemCD[playerName];
+        }
+    }
+}
+
 // Initialize hit delay system
 function initializeHitDelaySystem() {
+    // Cleanup offline players every 10 seconds
+    system.runInterval(() => {
+        cleanupOfflinePlayers();
+    }, 200); // 10 seconds (200 ticks)
+
     if (
         world.afterEvents &&
         world.afterEvents.entityDie &&

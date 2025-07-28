@@ -22,10 +22,14 @@ export function raycastShoot(player) {
                 const target = entity[0];
                 target.applyDamage(10);
 
-                player.runCommand(
+                player.runCommandAsync(
                     `particle minecraft:crit ${x} ${y} ${z}`
-                );
-                player.runCommand(`playsound random.orb @s`);
+                ).catch(() => {
+                    player.runCommand(`particle minecraft:crit ${x} ${y} ${z}`);
+                });
+                player.runCommandAsync(`playsound random.orb @s`).catch(() => {
+                    player.runCommand(`playsound random.orb @s`);
+                });
 
                 return;
             }
@@ -36,7 +40,11 @@ export function raycastShoot(player) {
         const fy = origin.y + direction.y * MAX_DISTANCE;
         const fz = origin.z + direction.z * MAX_DISTANCE;
 
-        player.runCommand(`particle minecraft:smoke ${fx} ${fy} ${fz}`);
-        player.runCommand(`playsound mob.blaze.hit @s`);
+        player.runCommandAsync(`particle minecraft:smoke ${fx} ${fy} ${fz}`).catch(() => {
+            player.runCommand(`particle minecraft:smoke ${fx} ${fy} ${fz}`);
+        });
+        player.runCommandAsync(`playsound mob.blaze.hit @s`).catch(() => {
+            player.runCommand(`playsound mob.blaze.hit @s`);
+        });
     });
 }
