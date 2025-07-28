@@ -5,7 +5,11 @@ const STAMINA_MAX = 100;
 const STAMINA_BAR_LENGTH = 10;
 const STAMINA_REGEN = 1; // per tick
 const STAMINA_DRAIN = 2; // per aksi berat (misal: lari/lompat)
-const USE_VANILLA_STYLE = true; // Set true untuk tampilan mirip vanilla
+
+// Unicode privat untuk icon stamina
+const ICON_KOSONG = "\uE001";
+const ICON_PENUH = "\uE002";
+const ICON_SEPARUH = "\uE003";
 
 // Mendapatkan stamina pemain
 function getStamina(player) {
@@ -17,57 +21,40 @@ function setStamina(player, value) {
     player.setDynamicProperty("stamina", Math.max(0, Math.min(STAMINA_MAX, value)));
 }
 
-// Membuat bar stamina unicode yang mirip vanilla
+// Membuat bar stamina dengan icon custom
 function createStaminaBar(stamina) {
-    const filled = Math.round((stamina / STAMINA_MAX) * STAMINA_BAR_LENGTH);
-    const empty = STAMINA_BAR_LENGTH - filled;
-    let color = "§a"; // hijau
-    if (stamina < 30) color = "§c"; // merah
-    else if (stamina < 70) color = "§e"; // kuning
-    
-    if (USE_VANILLA_STYLE) {
-        return `${color}${"█".repeat(filled)}§7${"░".repeat(empty)}`;
-    } else {
-        return `${color}${"|".repeat(filled)}§7${".".repeat(empty)}`;
+    const perSlot = STAMINA_MAX / STAMINA_BAR_LENGTH;
+    let bar = "";
+    for (let i = 0; i < STAMINA_BAR_LENGTH; i++) {
+        const slotValue = stamina - i * perSlot;
+        if (slotValue >= perSlot) {
+            bar += ICON_PENUH;
+        } else if (slotValue > perSlot / 2) {
+            bar += ICON_SEPARUH;
+        } else {
+            bar += ICON_KOSONG;
+        }
     }
+    return bar;
 }
 
-// Tampilkan stamina bar di atas hunger bar (title)
+// Tampilkan stamina bar di atas hunger bar (subtitle)
 function showStaminaBar(player) {
     const stamina = getStamina(player);
     const bar = createStaminaBar(stamina);
     const percent = Math.round((stamina / STAMINA_MAX) * 100);
-    
+
     try {
-        if (USE_VANILLA_STYLE) {
-            // Tampilan mirip vanilla: title untuk label, subtitle untuk bar
-            const titleText = `§fStamina`;
-            const subtitleText = `${bar} §f${percent}%`;
-            
-            if (typeof player.runCommandAsync === "function") {
-                player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`).catch(() => {
-                    player.runCommand(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`);
-                });
-                player.runCommandAsync(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`).catch(() => {
-                    player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`);
-                });
-            } else if (typeof player.runCommand === "function") {
-                player.runCommand(`titleraw @s title {"rawtext":[{"text":"${titleText}"}]}`);
+        // Subtitle = tepat di atas hunger bar
+        const subtitleText = `§fStamina: ${bar} §7${percent}%`;
+        if (typeof player.runCommandAsync === "function") {
+            player.runCommandAsync(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`).catch(() => {
                 player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`);
-            }
-        } else {
-            // Tampilan lama: semua dalam satu bar
-            const text = `§fStamina: ${bar} §f${percent}%`;
-            if (typeof player.runCommandAsync === "function") {
-                player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`).catch(() => {
-                    player.runCommand(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`);
-                });
-            } else if (typeof player.runCommand === "function") {
-                player.runCommand(`titleraw @s title {"rawtext":[{"text":"${text}"}]}`);
-            }
+            });
+        } else if (typeof player.runCommand === "function") {
+            player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":"${subtitleText}"}]}`);
         }
     } catch (e) {
-        // Abaikan error jika command tidak berhasil
         console.warn("Failed to show stamina bar:", e);
     }
 }
@@ -90,14 +77,10 @@ function drainStamina(player, amount = STAMINA_DRAIN) {
 function clearStaminaBar(player) {
     try {
         if (typeof player.runCommandAsync === "function") {
-            player.runCommandAsync(`titleraw @s title {"rawtext":[{"text":""}]}`).catch(() => {
-                player.runCommand(`titleraw @s title {"rawtext":[{"text":""}]}`);
-            });
             player.runCommandAsync(`titleraw @s subtitle {"rawtext":[{"text":""}]}`).catch(() => {
                 player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":""}]}`);
             });
         } else if (typeof player.runCommand === "function") {
-            player.runCommand(`titleraw @s title {"rawtext":[{"text":""}]}`);
             player.runCommand(`titleraw @s subtitle {"rawtext":[{"text":""}]}`);
         }
     } catch (e) {
@@ -115,22 +98,14 @@ function updateAllStaminaBars() {
 
 // Inisialisasi sistem stamina
 function initializeStaminaSystem() {
-    // Clear title untuk semua pemain saat start
+    // Clear bar untuk semua pemain saat start
     for (const player of world.getPlayers()) {
         clearStaminaBar(player);
     }
-    
-    // Subscribe ke player leave event untuk clear title
-    world.afterEvents.playerLeave.subscribe((event) => {
-        // Clear title saat player leave (gunakan playerName untuk tracking)
-        const playerName = event.playerName;
-        // Note: Tidak bisa clear title untuk player yang sudah offline
-        // Title akan otomatis hilang saat player leave
-    });
-    
+    // Update bar stamina setiap 5 tick (4x per detik)
     system.runInterval(() => {
         updateAllStaminaBars();
-    }, 5); // 4x per detik
+    }, 5);
 }
 
 // Export fungsi

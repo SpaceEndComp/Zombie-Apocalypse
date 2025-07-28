@@ -1,0 +1,15 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "textures/ui/stamina_icons.png",
+      "ascent": 16,
+      "height": 16,
+      "chars": [
+        "\uE001",
+        "\uE002",
+        "\uE003"
+      ]
+    }
+  ]
+}
