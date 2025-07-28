@@ -74,5 +74,5 @@ export function crazyNight() {
                 }
             }
         }
-    });
+    }, 10);
 }

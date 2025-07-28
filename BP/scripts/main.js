@@ -7,6 +7,7 @@ import { initializeHitDelaySystem } from "./item/meleHitDelays.js";
 import "./item/crowbar_logic.js";
 import { initializeStaminaSystem, drainStamina } from "./ui/StaminaBar.js";
 import "./player/leveling/PlayerLeveling.js";
+import "./system/NightFog.js"
 
 // memanggil
 dayLeveling();
