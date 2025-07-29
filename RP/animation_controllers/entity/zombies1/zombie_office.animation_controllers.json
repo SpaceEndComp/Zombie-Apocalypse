@@ -43,22 +43,6 @@
 				}
 			}
 		},
-		"controller.animation.zombie_office.sniffing": {
-			"initial_state": "default",
-			"states": {
-				"default": {
-					"transitions": [
-						{ "sniffing": "query.is_sniffing" }
-					]
-				},
-				"sniffing": {
-					"animations": [ "sniffing" ],
-					"transitions": [
-						{ "default": "!query.is_sniffing" }
-					]
-				}
-			}
-		},
 		"controller.animation.zombie_office.look_at_target": {
 			"initial_state": "looking",
 			"states": {

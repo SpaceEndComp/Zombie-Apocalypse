@@ -8,6 +8,7 @@ import { initializeStaminaSystem, drainStamina } from "./ui/StaminaBar.js";
 import "./player/leveling/PlayerLeveling.js";
 
 // memanggil
+moveZombiesToNearbyPlayer(player.location, 16);
 dayLeveling();
 initializeHitDelaySystem();
 initializeStaminaSystem(); // Inisialisasi sistem stamina baru

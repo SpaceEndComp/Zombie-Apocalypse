@@ -21,18 +21,15 @@
                 "idle": "animation.zombie_office.idle",
                 "walk": "animation.zombie_office.walk",
                 "attack": "animation.zombie_office.attack",
-                "sniffing": "animation.zombie_office.sniffing",
                 "look_at_target": "animation.zombie_office.look_at_target",
                 "controller_walk": "controller.animation.zombie_office.walk",
                 "controller_attack": "controller.animation.zombie_office.attack",
-                "controller_sniffing": "controller.animation.zombie_office.sniffing",
                 "controller_look_at_target": "controller.animation.zombie_office.look_at_target"
             },
             "scripts": {
                 "animate": [
                     "controller_attack",
                     "controller_walk",
-                    "controller_sniffing",
                     "controller_look_at_target"
                 ]
             }
