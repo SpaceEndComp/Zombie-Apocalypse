@@ -1,5 +1,5 @@
 import { crazyNight, dayLeveling } from "./DayLeveling";
-import { world, EffectType, system } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import { showStatusUI } from "./ui/ShowStatusUI";
 import { raycastShoot } from "./gun/logic_pistol";
 import "./player/chat/chatLokal.js";
@@ -7,7 +7,7 @@ import { initializeHitDelaySystem } from "./item/meleHitDelays.js";
 import "./item/crowbar_logic.js";
 import { initializeStaminaSystem, drainStamina } from "./ui/StaminaBar.js";
 import "./player/leveling/PlayerLeveling.js";
-import "./system/NightFog.js"
+import "./system/NightFog.js";
 
 // memanggil
 dayLeveling();
