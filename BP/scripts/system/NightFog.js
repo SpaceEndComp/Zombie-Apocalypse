@@ -5,7 +5,7 @@ system.runInterval(() => {
     const isMidnight = time > 13000 && time < 18000;
 
     for (const player of world.getPlayers()) {
-        player.runCommandAsync(
+        player.runCommand(
             `fog ${isMidnight ? "push" : "pop"} zombie_apocalypse_fog`
         );
     }
