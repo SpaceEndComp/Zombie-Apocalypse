@@ -19,6 +19,7 @@
             "minecraft:geometry": {
                 "identifier": "geometry.radio"
             },
+            "minecraft:display_name": "terrain.seza:radio.name",
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 0.5
             },
@@ -40,9 +41,7 @@
                     }
                 }
             },
-            "minecraft:custom_components": [
-                "seza:radio"
-            ]
-        }
+            "minecraft:loot": "loot_tables/radio.json",
+            "minecraft:map_color": "#888888"
     }
 }
