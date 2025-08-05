@@ -21,9 +21,7 @@ import { world, system } from "@minecraft/server";
                     );
 
                     if (day === 1) {
-                        world.sendMessage(
-                            `§2Zombie tahap 1 muncul, hati hati`
-                        );
+                        world.sendMessage(`§2Zombie tahap 1 muncul, hati hati`);
                     }
 
                     if (day === 10) {
