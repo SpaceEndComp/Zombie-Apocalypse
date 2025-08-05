@@ -7,8 +7,8 @@ let itemsConfig = {
         dmg: 8
     },
     "seza:crowbar": {
-        cd:0.3,
-        dmg:6
+        cd: 0.3,
+        dmg: 6
     }
     // Tambahkan item lain di sini jika perlu
 };
@@ -33,7 +33,7 @@ function initializeHitDelaySystem() {
     // Cleanup offline players every 10 seconds
     system.runInterval(() => {
         cleanupOfflinePlayers();
-    }, 200); // 10 seconds (200 ticks)
+    }, 200); // 200 ticks = 10 seconds
 
     if (
         world.afterEvents &&
@@ -66,15 +66,11 @@ function initializeHitDelaySystem() {
             const playerName = player.nameTag || player.name || "Unknown";
 
             let currentTime = Date.now();
-            let skip = false;
 
             // Cek apakah player sudah ada di cooldown
             if (!playersItemCD[playerName]) {
                 playersItemCD[playerName] = currentTime;
-                skip = true;
-            }
-
-            if (!skip) {
+            } else {
                 let timeDiff = (currentTime - playersItemCD[playerName]) / 1000;
                 if (timeDiff < itemConfig.cd) {
                     // Masih dalam cooldown, batalkan hit

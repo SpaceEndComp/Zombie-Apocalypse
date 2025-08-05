@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server";
-import { dialogDay10 } from "./player/dialog/player";
 
-export function dayLeveling() {
+// Auto-execute function saat di-import
+(function dayLeveling() {
     let lastCheckDay = -1;
     const trigerredDays = new Set();
 
@@ -12,6 +12,9 @@ export function dayLeveling() {
             if (day < 1) day = 1;
 
             if (day !== lastCheckDay) {
+                // Update lastCheckDay
+                lastCheckDay = day;
+                
                 if (!trigerredDays.has(day)) {
                     world.sendMessage(
                         `§7[§l§aZombie Apocalypse§r§7] §l§cHari ke-${day} telah dimulai!`
@@ -27,8 +30,24 @@ export function dayLeveling() {
                         world.sendMessage(
                             `§6Zombie tahap 2 berevolusi! Bersiaplah!`
                         );
-                        for (const player of world.getPlayers()) {
-                            dialogDay10(player);
+                        // Panggil dialog untuk semua pemain
+                        const players = world.getPlayers();
+                        if (players.length > 0) {
+                            for (const player of players) {
+                                try {
+                                    // Menggunakan rawtext untuk support translasi
+                                    player.runCommandAsync(
+                                        `titleraw @s title {"rawtext":[
+                                            {"text":"§e["},
+                                            {"selector":"@s"},
+                                            {"text":"§e]: "},
+                                            {"translate":"dialog.day10.title"}
+                                        ]}`
+                                    );
+                                } catch (playerError) {
+                                    console.warn(`Error sending dialog to player ${player.name}: ${playerError.message}`);
+                                }
+                            }
                         }
                     }
 
@@ -45,10 +64,16 @@ export function dayLeveling() {
                     }
 
                     trigerredDays.add(day);
+                    
+                    // Cleanup trigerredDays untuk mencegah memory leak
+                    if (trigerredDays.size > 500) {
+                        trigerredDays.clear();
+                    }
                 }
             }
         } catch (e) {
-            world.sendMessage(`§l§cTerjadi kesalahan: ${e.message}`);
+            console.error(`Error in dayLeveling: ${e.message}`);
+            world.sendMessage(`§l§cTerjadi kesalahan dalam sistem hari: ${e.message}`);
         }
     }, 20);
-}
+})();

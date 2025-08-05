@@ -1,0 +1,43 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"controller.animation.drink.drinking": {
+			"initial_state": "first_person",
+			"states": {
+				"first_person": {
+					"animations": ["first_person"],
+					"transitions": [
+						{"drink": "query.item_in_use_duration"}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				},
+				"drink": {
+					"animations": ["drink_FP"],
+					"transitions": [
+						{"first_person": "query.any_animation_finished"}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				}
+			}
+		},
+		"controller.animation.drink.wielding": {
+			"initial_state": "first_person",
+			"states": {
+				"first_person": {
+					"animations": ["first_person"],
+					"transitions": [
+						{"third_person": "!variable.is_first_person"}
+					]
+				},
+				"third_person": {
+					"animations": ["third_person"],
+					"transitions": [
+						{"first_person": "variable.is_first_person"}
+					]
+				}
+			}
+		}
+	}
+}

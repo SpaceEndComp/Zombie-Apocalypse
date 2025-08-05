@@ -1,0 +1,48 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "seza:radio",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "origin": [-8, 0, -4],
+                "size": [8, 16, 4]
+            },
+            "minecraft:selection_box": {
+                "origin": [-8, 0, -4],
+                "size": [8, 16, 4]
+            },
+            "minecraft:geometry": {
+                "identifier": "geometry.radio"
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.5
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 1.0
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "radio",
+                    "render_method": "blend"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.radio",
+                "material_instances": {
+                    "*": {
+                        "texture": "radio",
+                        "render_method": "blend"
+                    }
+                }
+            },
+            "minecraft:custom_components": [
+                "seza:radio"
+            ]
+        }
+    }
+}

@@ -2,20 +2,8 @@
     "resource_pack_name": "zombie_apocalypse",
     "texture_name": "atlas.terrain",
     "texture_data": {
-        "stamina_full": {
-            "textures": "textures/ui/stamina_icons",
-            "uv_size": [16, 16],
-            "uv_offset": [0, 0]
-        },
-        "stamina_half": {
-            "textures": "textures/ui/stamina_icons", 
-            "uv_size": [16, 16],
-            "uv_offset": [16, 0]
-        },
-        "stamina_empty": {
-            "textures": "textures/ui/stamina_icons",
-            "uv_size": [16, 16], 
-            "uv_offset": [32, 0]
+        "radio": {
+            "texture": "textures/blocks/radio"
         }
     }
 } 
