@@ -43,5 +43,6 @@
             },
             "minecraft:loot": "loot_tables/radio.json",
             "minecraft:map_color": "#888888"
+        }
     }
 }
