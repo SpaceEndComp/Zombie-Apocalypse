@@ -9,12 +9,12 @@
         },
         "components": {
             "minecraft:collision_box": {
-                "origin": [-8, 0, -4],
-                "size": [8, 16, 4]
+                "origin": [-4, 0, -4],
+                "size": [8, 15, 8]
             },
             "minecraft:selection_box": {
-                "origin": [-8, 0, -4],
-                "size": [8, 16, 4]
+                "origin": [-4, 0, -4],
+                "size": [8, 16, 8]
             },
             "minecraft:geometry": {
                 "identifier": "geometry.radio"
@@ -30,15 +30,6 @@
                 "*": {
                     "texture": "radio",
                     "render_method": "blend"
-                }
-            },
-            "minecraft:item_visual": {
-                "geometry": "geometry.radio",
-                "material_instances": {
-                    "*": {
-                        "texture": "radio",
-                        "render_method": "blend"
-                    }
                 }
             },
             "minecraft:loot": "loot_tables/radio.json",
