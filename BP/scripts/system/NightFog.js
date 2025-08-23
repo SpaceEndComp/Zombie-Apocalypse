@@ -5,8 +5,13 @@ system.runInterval(() => {
     const isMidnight = time > 13000 && time < 18000;
 
     for (const player of world.getPlayers()) {
-        player.runCommand(
-            `fog ${isMidnight ? "push" : "pop"} zombie_apocalypse_fog`
-        );
+        if (isMidnight) {
+            player.addEffect("minecraft:darkness", 5, {
+                amplifier: 0,
+                showParticles: false,
+            });
+        } else {
+            player.removeEffect("minecraft:darkness");
+        }
     }
-}, 100);
+}, 10);
