@@ -6,3 +6,4 @@ import "./item/meleHitDelays";
 import "./player/chat/chatLokal";
 import "./ui/ShowStatusUI";
 import "./system/NightFog";
+import "./item/zombiradar";
