@@ -2,16 +2,13 @@ import { system, world } from "@minecraft/server";
 
 system.runInterval(() => {
     const time = world.getTimeOfDay();
-    const isMidnight = time > 13000 && time < 18000;
+    const isMidnight = time > 13000 && time < 22000;
 
     for (const player of world.getPlayers()) {
         if (isMidnight) {
-            player.addEffect("minecraft:darkness", 5, {
-                amplifier: 0,
-                showParticles: false,
-            });
+            player.runCommand(`fog @s push "custom:dark_fog" "DarkOverride"`);
         } else {
-            player.removeEffect("minecraft:darkness");
+            player.runCommand(`fog @s remove "DarkOverride"`);
         }
     }
-}, 10);
+}, 20);
