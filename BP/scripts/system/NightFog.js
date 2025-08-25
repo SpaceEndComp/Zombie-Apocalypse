@@ -6,9 +6,9 @@ system.runInterval(() => {
 
     for (const player of world.getPlayers()) {
         if (isMidnight) {
-            player.runCommand(`fog @s push "custom:dark_fog" "DarkOverride"`);
+            player.runCommand(`fog @a push "custom:dark_fog" "DarkOverride"`);
         } else {
-            player.runCommand(`fog @s remove "DarkOverride"`);
+            player.runCommand(`fog @a remove "DarkOverride"`);
         }
     }
 }, 20);
