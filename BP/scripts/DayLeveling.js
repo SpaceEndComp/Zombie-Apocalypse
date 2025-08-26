@@ -34,7 +34,7 @@ import { world, system } from "@minecraft/server";
                             for (const player of players) {
                                 try {
                                     // Menggunakan rawtext untuk support translasi
-                                    player.runCommandAsync(
+                                    player.runCommand(
                                         `titleraw @s title {"rawtext":[
                                             {"text":"§e["},
                                             {"selector":"@s"},
