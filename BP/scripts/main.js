@@ -1,8 +1,23 @@
-import "./blocks/radio";
 import "./DayLeveling";
+
+// Blocks
+import "./blocks/radio";
+
+// Guns
 import "./gun/logic_pistol";
-import "./item/meleHitDelays";
+
+// Player
 import "./player/chat/chatLokal";
+
+// UI
 import "./ui/ShowStatusUI";
+
+// System
 import "./system/NightFog";
-import "./item/zombiradar";
+
+// Items
+import "./item/zombiradar"; // sesuaikan zombie
+import "./item/meleHitDelays";
+
+// Mobs
+import "./mobs/ZombieBehav"; // sesuaikan zombie
