@@ -6,23 +6,6 @@ const RADIO_BLOCK_ID = 'seza:radio';
 const BROADCAST_RADIUS = 100;
 const LISTEN_RADIUS = 15;
 
-// Fungsi untuk validasi versi API (opsional)
-function checkAPICompatibility() {
-    try {
-        // Test beberapa method yang mungkin berbeda di versi beta
-        const testPlayer = world.getAllPlayers()[0];
-        if (testPlayer) {
-            // Method untuk mendapatkan dimensi bisa berbeda
-            const dimension = testPlayer.dimension;
-            return true;
-        }
-    } catch (error) {
-        console.warn('API compatibility issue detected:', error.message);
-        return false;
-    }
-    return true;
-}
-
 // Fungsi untuk menampilkan form frekuensi
 function showFrequencyForm(player, radioBlock) {
     const form = new ModalFormData()
@@ -345,9 +328,3 @@ world.beforeEvents.chatSend.subscribe(event => {
         sender.sendMessage(`§c[Radio] Command error: ${commandError.message}`);
     }
 });
-
-// Inisialisasi dengan version check
-system.runInterval(() => {
-    // Periodic health check untuk API beta (opsional)
-    // Bisa ditambah logging atau monitoring di sini
-}, 1200); // Setiap 60 detik
