@@ -1,6 +1,0 @@
-entity.seza:zombie_office.name=zombie kantoran
-entity.seza:zombie.name=zombie
-entity.seza:zombie_builder.name=zombie pembangun
-item.spawn_egg.entity.seza:zombie_office.name=telur zombie kantoran
-item.spawn_egg.entity.seza:zombie.name=telur zombie
-item.spawn_egg.entity.seza:zombie_builder.name=telur zombie pembangun

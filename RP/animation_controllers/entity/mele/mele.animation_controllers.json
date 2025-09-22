@@ -1,0 +1,38 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.mele.wield": {
+			"initial_state": "first_person",
+			"states": {
+				"first_person": {
+					"animations": ["wield_first_person"],
+					"transitions": [
+						{"third_person": "!c.is_first_person"}
+					]
+				},
+				"third_person": {
+					"animations": ["wield_third_person"],
+					"transitions": [
+						{"first_person": "c.is_first_person"}
+					]
+				}
+			}
+		},
+		"controller.animation.mele.attack": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "attack": "query.is_using_item" }
+					]
+				},
+				"attack": {
+					"animations": ["attack"],
+					"transitions": [
+						{ "default": "q.any_animation_finished" }
+					]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "zombie:fog_apocalypse",
+            "fog_identifier": "zombie_apocalypse_fog",
+            "replace": true
+        },
+        "distance": {
+            "fog_start": 2.0,
+            "fog_end": 20.0,
+            "fog_color": "#0a0a0a",
+            "render_distance_type": "fixed"
+        }
+    }
+}

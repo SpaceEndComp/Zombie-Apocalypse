@@ -1,0 +1,38 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "seza:zombie",
+            "min_engine_version": "1.8.0",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "textures": {
+                "default": "textures/entity/zombies1/zombie"
+            },
+            "geometry": {
+                "default": "geometry.zombie_office"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_zombie"
+            },
+            "render_controllers": ["controller.render.zombie"],
+            "animations": {
+                "idle": "animation.zombie_office.idle",
+                "walk": "animation.zombie_office.walk",
+                "attack": "animation.zombie_office.attack",
+                "look_at_target": "animation.zombie_office.look_at_target",
+                "controller_walk": "controller.animation.zombie_office.walk",
+                "controller_attack": "controller.animation.zombie_office.attack",
+                "controller_look_at_target": "controller.animation.zombie_office.look_at_target"
+            },
+            "scripts": {
+                "animate": [
+                    "controller_attack",
+                    "controller_walk",
+                    "controller_look_at_target"
+                ]
+            }
+        }
+    }
+}

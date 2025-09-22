@@ -1,0 +1,100 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "seza:zombie",
+            "is_spawnable": true,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:health": {
+                "value": 20,
+                "max": 20
+            },
+            "minecraft:collision_box": {
+                "height": 2.0,
+                "width": 0.8
+            },
+            "minecraft:movement": {
+                "value": 0.25
+            },
+            "minecraft:attack": {
+                "damage": 4
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:jump.static": {},
+            "minecraft:experience_reward": {
+                "on_death": "query.last_hit_by_player ? 5 : 0"
+            },
+            "minecraft:physics": {},
+            "minecraft:nameable": {},
+            "minecraft:pushable": {
+                "is_pushable": true,
+                "is_pushable_by_piston": true
+            },
+            "minecraft:suspect_tracking": {},
+            "minecraft:navigation.walk": {
+                "can_path_over_water": true
+            },
+            "minecraft:loot": {
+                "table": "loot_tables/zombie.json"
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "zombie",
+                    "monster",
+                    "undead",
+                    "stage_1"
+                ]
+            },
+            "minecraft:behavior.float": {
+                "priority": 0
+            },
+            "minecraft:behavior.hurt_by_target": {
+                "priority": 1
+            },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 2,
+                "entity_types": {
+                    "filters": {
+                        "any_of": [
+                            {
+                                "test": "is_family",
+                                "subject": "other",
+                                "value": "player"
+                            },
+                            {
+                                "test": "is_family",
+                                "subject": "other",
+                                "value": "villager"
+                            }
+                        ]
+                    }
+                }
+            },
+            "minecraft:behavior.look_at_target": {
+                "priority": 3,
+                "look_distance": 8
+            },
+            "minecraft:behavior.melee_attack": {
+                "priority": 4,
+                "speed_multiplier": 1.2,
+                "track_target": true
+            },
+            "minecraft:behavior.random_stroll": {
+                "priority": 5,
+                "speed_multiplier": 0.8
+            },
+            "minecraft:behavior.random_swim": {
+                "priority": 6
+            },
+            "minecraft:behavior.look_at_player": {
+                "priority": 7,
+                "look_distance": 8
+            },
+            "minecraft:behavior.random_look_around": {
+                "priority": 8
+            }
+        }
+    }
+}
