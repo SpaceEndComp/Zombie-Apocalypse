@@ -1,38 +1,58 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Zombie Apocalypse",
-    "description": "Addon for Space End server(Zombie Apocalypse)",
-    "min_engine_version": [1, 21, 100],
-    "uuid": "a89ef4f1-9ae3-4361-a641-1aa42acd0f7a",
-    "version": [1, 0, 0]
-  },
-  "modules": [
-    {
-      "type": "data",
-      "uuid": "c4e11ab6-4118-4b8a-9cb0-e1ea5c3dd506",
-      "version": [1, 0, 0]
+    "format_version": 2,
+    "header": {
+        "name": "SEZA Behavior Pack",
+        "description": "addon for Space End server (Zombie Apocalypse)",
+        "uuid": "1c1f87fd-9bbe-4e46-934b-8f9ec2765e11",
+        "min_engine_version": [
+            1,
+            21,
+            100
+        ],
+        "version": [
+            1,
+            0,
+            1
+        ]
     },
-    {
-      "type": "script",
-      "language": "javascript",
-      "uuid": "07354d82-5ab9-490d-b741-64d98654111e",
-      "entry": "scripts/main.js",
-      "version": [1, 0, 0]
-    }
-  ],
-  "dependencies": [
-    {
-      "module_name": "@minecraft/server",
-      "version": "2.2.0-beta"
-    },
-    {
-      "module_name": "@minecraft/server-ui",
-      "version": "2.1.0-beta"
-    },
-    {
-      "uuid": "dac4301c-d4a0-4fa1-a7e2-d40a3e6fa2b0",
-      "version": [1,0,0]
-    }
-  ]
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "2a86792c-efae-4295-ad11-9dd17fe05197",
+            "version":[
+                1,
+                0,
+                1
+            ]
+        },
+        {
+            "type": "script",
+            "language": "Javascript",
+            "uuid": "a1cd44f4-3432-45a8-b44d-0aece397ca78",
+            "entry": "scripts/main.js",
+            "version": [
+                1,
+                0,
+                1
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.2.0-beta"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "2.1.0-beta"
+        },
+        {
+            "uuid": "6ac601a0-dac1-4759-8680-3bd14eab3bd9",
+            "version": [
+                1,
+                0,
+                1
+            ]
+        }
+    ]
 }

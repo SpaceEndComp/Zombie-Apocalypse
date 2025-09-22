@@ -1,27 +1,12 @@
 {
-  "resource_pack_name": "zombie_apocalypse",
-  "texture_name": "atlas.items",
-  "texture_data": {
-    "fire_axe": {
-      "textures": "textures/items/mele/fire_axe"
-    },
-    "crowbar": {
-      "textures": "textures/items/tools/crowbar"
-    },
-    "spawn_egg_zombie": {
-      "textures": "textures/items/spawn_eggs/spawn_egg_zombie_office"
-    },
-    "bandage": {
-      "textures": "textures/items/medicals/bandage"
-    },
-    "medkit": {
-      "textures": "textures/items/medicals/medkit"
-    },
-    "water_bottle": {
-      "textures": "textures/items/consumables/water_bottle"
-    },
-    "burger": {
-      "textures": "textures/items/consumables/burger"
+    "resource_pack_name": "SEZA",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "zombie_office_spawn_egg": {
+            "textures": "textures/items/spawn_eggs/zombie_office_spawn_egg"
+        },
+        "rifle": {
+            "textures": "textures/items/guns/rifle"
+        }
     }
-  }
 }

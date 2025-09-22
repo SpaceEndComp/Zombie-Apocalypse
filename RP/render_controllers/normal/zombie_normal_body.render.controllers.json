@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "render_controllers": {
+        "controller.render.zombie_normal_body": {
+            "arrays": {
+                "textures": {
+                    "Array.body": [
+                        "Texture.body_1",
+                        "Texture.body_2",
+                        "Texture.body_3",
+                        "Texture.body_4",
+                        "Texture.body_5",
+                        "Texture.body_6",
+                        "Texture.body_7"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                { "*": "Material.default" }
+            ],
+            "textures": [
+                "Array.body[variable.skin]"
+            ],
+            "is_hurt_color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+            }
+        }
+    }
+}

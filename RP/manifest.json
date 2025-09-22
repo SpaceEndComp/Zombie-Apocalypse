@@ -1,17 +1,29 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Zombie Apocalypse",
-    "description": "Addon for Space End server(Zombie Apocalypse)",
-    "min_engine_version": [1, 21, 100],
-    "uuid": "dac4301c-d4a0-4fa1-a7e2-d40a3e6fa2b0",
-    "version": [1, 0, 0]
-  },
-  "modules": [
-    {
-      "type": "resources",
-      "uuid": "9afd4519-d78e-46ed-aa70-c3d9803f1500",
-      "version": [1, 0, 0]
-    }
-  ]
+    "format_version": 2,
+    "header": {
+        "name": "SEZA Resource Pack",
+        "description": "addon for Space End server (Zombie Apocalypse)",
+        "uuid": "6ac601a0-dac1-4759-8680-3bd14eab3bd9",
+        "min_engine_version": [
+            1,
+            21,
+            100
+        ],
+        "version": [
+            1,
+            0,
+            1
+        ]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "a64c211d-69c7-4eeb-a576-151e8973ec77",
+            "version": [
+                1,
+                0,
+                1
+            ]
+        }
+    ]
 }

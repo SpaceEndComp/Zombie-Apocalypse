@@ -1,5 +1,5 @@
 {
-    "format_version": "1.12.0",
+    "format_version": "1.10.0",
     "minecraft:spawn_rules": {
         "description": {
             "identifier": "seza:zombie",
@@ -7,52 +7,57 @@
         },
         "conditions": [
             {
-                "minecraft:spawns_on_surface": {},
+                "minecraft:biome_filter": [
+                    {
+                        "test": "has_biome_tag",
+                        "operator": "==",
+                        "value": "monster"
+                    }
+                ],
                 "minecraft:brightness_filter": {
-                    "min": 8,
-                    "max": 15,
-                    "adjust_for_weather": true
-                },
-                "minecraft:difficulty_filter": {
-                    "min": "easy",
-                    "max": "hard"
-                },
-                "minecraft:weight": {
-                    "default": 40
-                },
-                "minecraft:herd": {
-                    "min_size": 1,
-                    "max_size": 4
-                },
-                "minecraft:biome_filter": {
-                    "test": "has_biome_tag",
-                    "operator": "==",
-                    "value": "monster"
-                }
-            },
-            {
-                "minecraft:spawns_on_surface": {},
-                "minecraft:spawns_underground": {},
-                "minecraft:brightness_filter": {
-                    "min":0,
+                    "min": 0,
                     "max": 7,
                     "adjust_for_weather": true
                 },
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+                "minecraft:herd": {
+                    "min_size": 1,
+                    "max_size": 3
+                },
+                "minecraft:weight": {
+                    "default": 100
+                },
                 "minecraft:difficulty_filter": {
                     "min": "easy",
                     "max": "hard"
+                }
+            },
+            {
+                "minecraft:biome_filter": [
+                    {
+                        "test": "has_biome_tag",
+                        "operator": "==",
+                        "value": "monster"
+                    }
+                ],
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": true
+                },
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+                "minecraft:herd": {
+                    "min_size": 1,
+                    "max_size": 1
                 },
                 "minecraft:weight": {
                     "default": 80
                 },
-                "minecraft:herd": {
-                    "min_size": 1,
-                    "max_size": 4
-                },
-                "minecraft:biome_filter": {
-                    "test": "has_biome_tag",
-                    "operator": "==",
-                    "value": "monster"
+                "minecraft:difficulty_filter": {
+                    "min": "easy",
+                    "max": "hard"
                 }
             }
         ]

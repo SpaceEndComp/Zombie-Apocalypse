@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "render_controllers": {
+        "controller.render.zombie_normal_leg": {
+            "arrays": {
+                "textures": {
+                    "Array.leg": [
+                        "Texture.leg_1",
+                        "Texture.leg_2",
+                        "texture.leg_3",
+                        "Texture.leg_4",
+                        "Texture.leg_5",
+                        "Texture.leg_6",
+                        "Texture.leg_7"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                { "*": "Material.default" }
+            ],
+            "textures": [
+                "Array.leg[variable.skin]"
+            ],
+            "is_hurt_color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+            }
+        }
+    }
+}

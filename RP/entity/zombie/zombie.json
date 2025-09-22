@@ -1,0 +1,57 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "seza:zombie",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "geometry": {
+                "default": "geometry.zombie_seza"
+            },
+            "textures": {
+                "head_1": "textures/entity/zombie/Zombie_Basic/head_1",
+                "head_2": "textures/entity/zombie/Zombie_Basic/head_2",
+                "head_3": "textures/entity/zombie/Zombie_Basic/head_3",
+                "head_4": "textures/entity/zombie/Zombie_Basic/head_4",
+                "head_5": "textures/entity/zombie/Zombie_Basic/head_5",
+                "head_6": "textures/entity/zombie/Zombie_Basic/head_6",
+                "head_7": "textures/entity/zombie/Zombie_Basic/head_7",
+                "body_1": "textures/entity/zombie/Zombie_Basic/body_1",
+                "body_2": "textures/entity/zombie/Zombie_Basic/body_2",
+                "body_3": "textures/entity/zombie/Zombie_Basic/body_3",
+                "body_4": "textures/entity/zombie/Zombie_Basic/body_4",
+                "body_5": "textures/entity/zombie/Zombie_Basic/body_5",
+                "body_6": "textures/entity/zombie/Zombie_Basic/body_6",
+                "body_7": "textures/entity/zombie/Zombie_Basic/body_7",
+                "leg_1": "textures/entity/zombie/Zombie_Basic/leg_1",
+                "leg_2": "textures/entity/zombie/Zombie_Basic/leg_2",
+                "leg_3": "textures/entity/zombie/Zombie_Basic/leg_3",
+                "leg_4": "textures/entity/zombie/Zombie_Basic/leg_4",
+                "leg_5": "textures/entity/zombie/Zombie_Basic/leg_5",
+                "leg_6": "textures/entity/zombie/Zombie_Basic/leg_6",
+                "leg_7": "textures/entity/zombie/Zombie_Basic/leg_7"
+            },
+            "spawn_egg": {
+                "texture": "zombie_office_spawn_egg"
+        },
+            "animations": {
+                "walk": "animation.zombie_normal.walk",
+                "idle": "animation.zombie_normal.idle",
+                "attack": "animation.zombie_normal.attack",
+                "controller.attack": "controller.animation.zombie_normal.attack",
+                "controller.walk": "controller.animation.zombie_normal.walk"
+            },
+            "scripts": {
+                "animate": [
+                    "controller.attack", "controller.walk"
+                ],
+                "initialize": [
+                    "variable.skin = math.floor(math.random(0, 6) * 7);",
+                    "variable.attack_time = 0.0;"
+                ]
+            },
+            "render_controllers": ["controller.render.zombie_normal_head", "controller.render.zombie_normal_body", "controller.render.zombie_normal_leg"]
+        }
+    }
+}

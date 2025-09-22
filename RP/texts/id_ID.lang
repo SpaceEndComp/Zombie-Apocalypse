@@ -1,6 +1,6 @@
-entity.seza:zombie.name=Zombie Kantor
-item.spawn_egg.entity.seza:zombie.name=Telur Spawn Zombie Kantor
-item.seza:fire_fighter_axe.name=Kapak Pemadam Kebakaran
-item.seza:crowbar.name=linggis
-dialog.day10.title=§eaneh, suasananya berbeda
-terrain.seza:radio.name=radio
+entity.seza:zombie_office.name=zombie kantoran
+entity.seza:zombie.name=zombie
+entity.seza:zombie_builder.name=zombie pembangun
+item.spawn_egg.entity.seza:zombie_office.name=telur zombie kantoran
+item.spawn_egg.entity.seza:zombie.name=telur zombie
+item.spawn_egg.entity.seza:zombie_builder.name=telur zombie pembangun

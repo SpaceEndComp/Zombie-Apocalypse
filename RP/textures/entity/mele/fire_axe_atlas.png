@@ -1,6 +1,0 @@
-# Texture Atlas untuk Fire Axe dengan Tangan Player
-# File ini harus berupa PNG dengan ukuran 64x64 pixel
-# Layout:
-# - Bagian kiri atas (0,0): Texture tangan player (warna kulit)
-# - Bagian kanan atas (32,0): Texture fire axe (kuning/hitam)
-# - Bagian bawah: UV mapping untuk geometry 

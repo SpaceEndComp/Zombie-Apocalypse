@@ -1,0 +1,234 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "seza:zombie_office",
+            "is_spawnable": true,
+            "is_summonable": true
+        },
+        "component_groups": {
+            "seza:morning_day": {
+                "minecraft:attack": {
+                    "damage": 3
+                },
+                "minecraft:movement": {
+                    "value": 0.23
+                }
+            },
+            "seza:night_day": {
+                "minecraft:attack": {
+                    "damage": 4
+                },
+                "minecraft:movement": {
+                    "value": 0.25
+                }
+            },
+            "seza:low_health": {
+                "minecraft:attack": {
+                    "damage": 2
+                },
+                "minecraft:movement": {
+                    "value": 0.2
+                }
+            }
+        },
+        "components": {
+            "minecraft:physics": {},
+            "minecraft:pushable": {
+                "is_pushable": true,
+                "is_pushable_by_piston": true
+            },
+            "minecraft:collision_box": {
+                "height": 1.8,
+                "width": 0.6
+            },
+            "minecraft:breathable": {
+                "total_supply": 15,
+                "breathes_air": true,
+                "breathes_water": false
+            },
+            "minecraft:experience_reward": {
+                "on_death": "query.last_hit_by_player ? Math.Random(1,5) : 0"
+            },
+            "minecraft:health": {
+                "max": 20,
+                "value": 20,
+                "min": 0
+            },
+            "minecraft:type_family": {
+                "family": [ "zombie", "monster", "mob" ]
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:navigation.walk": {
+                "can_jump": true,
+                "can_walk": true,
+                "can_float": true,
+                "avoid_damage_blocks": true,
+                "can_path_over_water": true,
+                "can_break_doors": true
+            },
+            "minecraft:jump.static": {},
+            "minecraft:loot": {
+                "table": "loot_tables/zombie_office.json"
+            },
+            "minecraft:behavior.hurt_by_target": {
+                "priority": 1
+            },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 2,
+                "entity_types": [
+                    { "filters": { "test": "is_family", "subject": "other", "value": "player" }, "max_dist": 40 },
+                    { "filters": { "test": "is_family", "subject": "other", "value": "villager" }, "max_dist": 40 }
+                ]
+            },
+            "minecraft:behavior.melee_attack": {
+                "priority": 3,
+                "speed_multiplier": 1.5,
+                "track_target": true
+            },
+            "minecraft:behavior.random_stroll": {
+                "priority": 7,
+                "speed_multiplier": 1.0
+            },
+            "minecraft:behavior.look_at_player": {
+                "priority": 8,
+                "look_distance": 8.0
+            },
+            "minecraft:behavior.look_at_target": {
+                "priority": 9,
+                "look_distance": 8.0,
+                "probability": 0.02
+            },
+            "minecraft:behavior.random_look_around":{
+                "priority": 10
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "on_damage": {
+                            "filters": {
+                                "test": "actor_health",
+                                "subject": "self",
+                                "operator": "<",
+                                "value": 10
+                            },
+                            "event": "seza:low_health",
+                            "target": "self"
+                        }
+                    }
+                ]
+            },
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": [
+                            {
+                                "all_of": [
+                                    {
+                                        "test": "actor_health",
+                                        "subject": "self",
+                                        "operator": ">=",
+                                        "value": 10
+                                    },
+                                    {
+                                        "test": "is_daytime",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "event": "seza:night_day",
+                        "target": "self"
+                    },
+                    {
+                        "filters": [
+                            {
+                                "all_of": [
+                                    {
+                                        "test": "actor_health",
+                                        "subject": "self",
+                                        "operator": ">=",
+                                        "value": 10
+                                    },
+                                    {
+                                        "test": "is_daytime",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "event": "seza:morning_day",
+                        "target": "self"
+                    }
+                ]
+            }
+        },
+        "events": {
+            "minecraft:entity_spawned": {
+                "sequence": [
+                    {
+                        "filters": {
+                            "test": "is_daytime",
+                            "value": false
+                        },
+                        "add": {
+                            "component_groups": [
+                                "seza:night_day"
+                            ]
+                        }
+                    },
+                    {
+                        "filters": {
+                            "test": "is_daytime",
+                            "value": true
+                        },
+                        "add": {
+                            "component_groups": [
+                                "seza:morning_day"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "seza:morning_day": {
+                "add": {
+                    "component_groups": [
+                        "seza:morning_day"
+                    ]
+                },
+                "remove": {
+                    "component_groups": [
+                        "seza:night_day",
+                        "seza:low_health"
+                    ]
+                }
+            },
+            "seza:night_day": {
+                "add": {
+                    "component_groups": [
+                        "seza:night_day"
+                    ]
+                },
+                "remove": {
+                    "component_groups": [
+                        "seza:morning_day",
+                        "seza:low_health"
+                    ]
+                }
+            },
+            "seza:low_health": {
+                "add": {
+                    "component_groups": [
+                        "seza:low_health"
+                    ]
+                },
+                "remove": {
+                    "component_groups": [
+                        "seza:morning_day",
+                        "seza:night_day"
+                    ]
+                }
+            }
+        }
+    }
+}
